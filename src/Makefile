@@ -28,7 +28,7 @@ default: lastz lastz_D
 #
 #---------
 
-definedForAll = -Wall -Wextra -Werror -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+definedForAll = -Wall -Wextra -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 
 VERSION_FLAGS= \
