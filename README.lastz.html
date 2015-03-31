@@ -245,14 +245,14 @@ A packed archive containing source code for LASTZ is available from the
 <p>
 If you have received the distribution as a packed archive, unpack it
 by whatever means are appropriate for your computer.  The result should be
-a directory <code>&lt;somepath&gt;/lastz&#8209;distrib&#8209;X.XX.XX</code> that contains
+a directory <code>&lt;somepath&gt;/lastz-distrib-X.XX.XX</code> that contains
 a <code>src</code> subdirectory (and some others).  You may find it convenient
-to remove the revision number (<code>&#8209;X.XX.XX</code>) from the directory name.
+to remove the revision number (<code>-X.XX.XX</code>) from the directory name.
 
 <p>
 Before building or installing any of the programs, you will need to tell the
 installer where to put the executable, either by setting the shell variable
-<code>$LASTZ_INSTALL</code>, or by editing the <code>make&#8209;include.mak</code>
+<code>$LASTZ_INSTALL</code>, or by editing the <code>make-include.mak</code>
 file to set the definition of <code>installDir</code>.  Also, be sure to add
 the directory you choose to your <code>$PATH</code>.
 
@@ -328,7 +328,7 @@ The stages are:
 
 <p>
 The usual flow is as follows (though most of these steps are optional,
-and some settings like <code><a href="#option_anyornone">&#8209;&#8209;anyornone</a></code>
+and some settings like <code><a href="#option_anyornone">--anyornone</a></code>
 may affect the processing order).
 We first read the target sequence(s) into memory, and use that to build a seed
 word position table that will allow us to quickly map any word in the target to
@@ -393,19 +393,19 @@ these sequences, use a command like this:
 <p>
 This runs in about two and a half minutes on a 2-GHz workstation, requiring
 only 400 Mb of RAM.  Figure 1(a) shows the results, plotted using the
-<code><a href="#option_format">&#8209;&#8209;format=rdotplot</a></code> output option and
+<code><a href="#option_format">--format=rdotplot</a></code> output option and
 the <a href="http://www.r-project.org/">R statistical package</a>.
 (When in <a href="#fmt_maf">MAF</a> format, LASTZ output can be browsed with
 the GMAJ interactive viewer for multiple alignments, available from the
 <a href="http://www.bx.psu.edu/miller_lab/">Miller Lab</a> at Penn State.)
 
 <p>
-Using <code><a href="#option_notransition">&#8209;&#8209;notransition</a></code> lowers
+Using <code><a href="#option_notransition">--notransition</a></code> lowers
 seeding sensitivity and reduces runtime (by a factor of about 10 in this case).
-<code><a href="#option_step">&#8209;&#8209;step=20</a></code> also lowers seeding
+<code><a href="#option_step">--step=20</a></code> also lowers seeding
 sensitivity, reducing runtime and also reducing memory consumption (by a factor
 of about 3.3 in this case).
-<code><a href="#option_nogapped">&#8209;&#8209;nogapped</a></code> eliminates the
+<code><a href="#option_nogapped">--nogapped</a></code> eliminates the
 computation of gapped alignments.  The complete alignment process using default
 settings (shown in Figure 1(b)) uses 1.3 Gb of RAM and takes 4.5 hours on a
 machine running at 2.83 GHz.
@@ -470,32 +470,32 @@ filename instructs LASTZ to ignore masking information and treat repeats the
 same as any other part of the chromosome, in order to accurately assess the
 uniqueness of the read mappings.  Since we know the two species are close, we
 want to reduce sensitivity.  Using
-<code><a href="#option_step">&#8209;&#8209;step=10</a></code>, we will only be looking for
+<code><a href="#option_step">--step=10</a></code>, we will only be looking for
 seeds at every 10th base.  Instead of the default seed pattern, we use
-<code><a href="#option_seed_match">&#8209;&#8209;seed=match12</a></code> and
-<code><a href="#option_notransition">&#8209;&#8209;notransition</a></code> so our
+<code><a href="#option_seed_match">--seed=match12</a></code> and
+<code><a href="#option_notransition">--notransition</a></code> so our
 seeds will be exact matches of 12 bases.  Instead of the default
 <code><a href="#stage_gapfree">x-drop extension method</a></code> we use
-<code><a href="#option_exact">&#8209;&#8209;exact=20</a></code> so that a 20-base
+<code><a href="#option_exact">--exact=20</a></code> so that a 20-base
 exact match is required to qualify as an HSP.  Because we are aligning short
 reads, we specify
-<code><a href="#option_noytrim">&#8209;&#8209;noytrim</a></code> so the alignment ends will
+<code><a href="#option_noytrim">--noytrim</a></code> so the alignment ends will
 not be trimmed back to the highest scoring locations during gapped extension.
 
 <p>
 We replace the default score set, which is for more distant species, with the
-stricter <code><a href="#option_match">&#8209;&#8209;match=1,5</a></code>.  This scores
+stricter <code><a href="#option_match">--match=1,5</a></code>.  This scores
 matching bases as +1 and mismatches as &minus;5.  We also use
-<code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code> so that <code>N</code>s
+<code><a href="#option_ambign">--ambiguous=n</a></code> so that <code>N</code>s
 will be scored appropriately.
 We are only interested in alignments that involve nearly an entire read, and
 since the species are close we don't want alignments with low identity;
-therefore we use <code><a href="#option_coverage">&#8209;&#8209;coverage=90</a></code> and
-<code><a href="#option_identity">&#8209;&#8209;identity=95</a></code>.
+therefore we use <code><a href="#option_coverage">--coverage=90</a></code> and
+<code><a href="#option_identity">--identity=95</a></code>.
 
 <p>
 For output, we are only interested in where the reads align, so we use the
-<code><a href="#option_format">&#8209;&#8209;format=general</a></code> option and specify
+<code><a href="#option_format">--format=general</a></code> option and specify
 that we want the position on the chromosome (<code>name1</code>,
 <code>start1</code>, <code>length1</code>) and the read name and orientation
 (<code>name2</code>, <code>strand2</code>).  This creates a tab-delimited
@@ -644,20 +644,20 @@ copies.  LASTZ can handle this situation in four different ways.
 it is aligning a sequence to itself, and performs the full computation on both
 copies (Figure 3(a)).
 <p>
-<li> Specify the <code><a href="#option_notrivial">&#8209;&#8209;notrivial</a></code>
+<li> Specify the <code><a href="#option_notrivial">--notrivial</a></code>
 option.  This performs the full computation on both copies, but doesn't report
 the trivial self-alignment block along the main diagonal (Figure 3(b)).
 <p>
-<li> Specify the <code><a href="#option_self">&#8209;&#8209;self</a></code> option in place
+<li> Specify the <code><a href="#option_self">--self</a></code> option in place
 of the query sequence.  LASTZ will save work by computing with only one block
 of each mirror-image pair, though it still reports both copies in the output by
 reconstructing the second copy from the first.  It also invokes
-<code>&#8209;&#8209;notrivial</code> automatically to omit the trivial self-alignment block
+<code>--notrivial</code> automatically to omit the trivial self-alignment block
 along the main diagonal.  This gives the same output as the previous method,
 but runs faster (Figure 3(c)).
 <p>
-<li> Specify <code><a href="#option_self">&#8209;&#8209;self</a></code> in place of the
-query, and also add the <code><a href="#option_nomirror">&#8209;&#8209;nomirror</a></code>
+<li> Specify <code><a href="#option_self">--self</a></code> in place of the
+query, and also add the <code><a href="#option_nomirror">--nomirror</a></code>
 option.  In this case LASTZ reports only one copy of each mirror-image pair,
 as well as omitting the trivial block (Figure 3(d)).
 </ol>
@@ -756,18 +756,18 @@ or <a href="#fmt_2bit">2Bit</a> format.  However they can be
 and they also can specify pre-processing actions such as selecting a
 subsequence from the file (see <a href="#seq_spec">Sequence Specifiers</a> for
 details).  With certain options such as
-<code><a href="#option_self">&#8209;&#8209;self</a></code> the <code>&lt;query&gt;</code>
+<code><a href="#option_self">--self</a></code> the <code>&lt;query&gt;</code>
 is not needed; otherwise if it is left unspecified the query sequences are read
 from <code>stdin</code>
 (though this does not work with random-access formats
 like <a href="#fmt_2bit">2Bit</a>).
 As a special case, the <code>&lt;target&gt;</code> is
-omitted when the <code><a href="#option_capsule">&#8209;&#8209;targetcapsule</a></code>
+omitted when the <code><a href="#option_capsule">--targetcapsule</a></code>
 option is used, since the target sequence is embedded within the capsule file.
 
 <p>
-For options, the general format is <code>&#8209;&#8209;&lt;keyword&gt;</code> or
-<code>&#8209;&#8209;&lt;keyword&gt;=&lt;value&gt;</code>, but for BLASTZ compatibility
+For options, the general format is <code>--&lt;keyword&gt;</code> or
+<code>--&lt;keyword&gt;=&lt;value&gt;</code>, but for BLASTZ compatibility
 some options also have an alternative syntax
 <code>&lt;letter&gt;=&lt;number&gt;</code>.
 (Be careful when copying options from the tables below, as some of the hyphens
@@ -842,7 +842,7 @@ This option cannot be used if the target is comprised of multiple sequences.
 <td>
 Inhibit the re-creation of mirror-image alignments.  Output consists of only
 one copy of each meaningful alignment block in a self-alignment.  This option
-is only applicable when the <code><a href="#option_self">&#8209;&#8209;self</a></code>
+is only applicable when the <code><a href="#option_self">--self</a></code>
 option is used.
 </td>
 </tr>
@@ -864,7 +864,7 @@ to too many places in the reference.
 <td></a><code>--queryhsplimit=nowarn:&lt;n&gt;</code></td>
 <td></td>
 <td>
-Same as <code>&#8209;&#8209;queryhsplimit=&lt;n&gt;</code> but warnings for queries that
+Same as <code>--queryhsplimit=&lt;n&gt;</code> but warnings for queries that
 exceed the limit are witheld.
 </td>
 </tr>
@@ -889,7 +889,7 @@ or <a href="#options_interpolation">interpolation</a>.
 By default both strands are searched, and the target is assumed to be different
 from the query.
 <p class=small>
-If <code><a href="#option_self">&#8209;&#8209;self</a></code> is used, the default is to
+If <code><a href="#option_self">--self</a></code> is used, the default is to
 re-create the redundant mirror-image alignment blocks in the output.
 </td>
 </tr>
@@ -911,7 +911,7 @@ stages.
 <td>
 Read the substitution scores and gap penalties (and possibly other options)
 from a <a href="#fmt_scoring">scoring file</a>.  This option cannot be used in
-conjunction with <a href="#option_match">&#8209;&#8209;match</a> or
+conjunction with <a href="#option_match">--match</a> or
 <a href="#option_infer">inference</a>.
 </td>
 </tr>
@@ -931,15 +931,15 @@ positive value that is subtracted from the score.  Also, x-drop and y-drop
 thresholds are called "dropoff", as raising them actually brings in *more*
 alignments, not fewer. -->
 <p class=small>
-Note that specifying <code>&#8209;&#8209;match</code> changes the defaults for some of
+Note that specifying <code>--match</code> changes the defaults for some of
 the other options (e.g. the scoring penalties for gaps, and various extension
 thresholds), as described in their respective sections.  The regular defaults
 are chosen for compatibility with BLASTZ, but since BLASTZ doesn't support
-<code>&#8209;&#8209;match</code>, LASTZ infers that you are not expecting BLASTZ
+<code>--match</code>, LASTZ infers that you are not expecting BLASTZ
 compatibility for this run, so it is free to use improved defaults.
 <p class=small>
 This option cannot be used in conjunction with
-<code><a href="#option_scores">&#8209;&#8209;scores</a></code> or
+<code><a href="#option_scores">--scores</a></code> or
 <code><a href="#option_infer">inference</a></code>.
 </td>
 </tr>
@@ -957,7 +957,7 @@ This option is only valid if <a href="#options_gapped">gapped extension</a> is
 being performed, and cannot be used in conjunction with
 <code><a href="#option_infer">inference</a></code>.  These values specified on
 the command line override any corresponding values from a file provided with
-<code><a href="#option_scores">&#8209;&#8209;scores</a></code>.
+<code><a href="#option_scores">--scores</a></code>.
 </td>
 </tr>
 
@@ -1021,9 +1021,9 @@ read from the <a href="#fmt_inference">control file</a>.
 This feature is somewhat experimental, and special builds of LASTZ are required
 to enable it.  Please see <a href="#adv_inference">Inferring Score Sets</a> for
 more information.  Inference cannot be used in conjunction with
-<code><a href="#option_scores">&#8209;&#8209;scores</a></code>,
-<code><a href="#option_match">&#8209;&#8209;match</a></code>, or
-<code><a href="#option_gap">&#8209;&#8209;gap</a></code>.
+<code><a href="#option_scores">--scores</a></code>,
+<code><a href="#option_match">--match</a></code>, or
+<code><a href="#option_gap">--gap</a></code>.
 </td>
 </tr>
 
@@ -1032,7 +1032,7 @@ more information.  Inference cannot be used in conjunction with
 <td></td>
 <td>
 Infer substitution scores and/or gap penalties, but don't perform the final
-alignment (requires <code><a href="#option_infscores">&#8209;&#8209;infscores</a></code>).
+alignment (requires <code><a href="#option_infscores">--infscores</a></code>).
 </td>
 </tr>
 
@@ -1042,7 +1042,7 @@ alignment (requires <code><a href="#option_infscores">&#8209;&#8209;infscores</a
 <td>
 Save the inferred scoring parameters to the specified file (or to
 <code>stdout</code>), in the same <a href="#fmt_scoring">format</a> expected
-by <code><a href="#option_scores">&#8209;&#8209;scores</a></code>.
+by <code><a href="#option_scores">--scores</a></code>.
 </td>
 </tr>
 
@@ -1057,15 +1057,15 @@ how this scoring matrix was determined).
 <table class=holder><tbody><tr><td class=indent>
 <table class=withlines><tbody style="text-align:right">
 <tr><td>&nbsp;</td><td>A</td><td>C</td><td>G</td><td>T</td></tr>
-<tr><td>A</td><td>91</td><td>&#8209;114</td><td>&#8209;31</td><td>&#8209;123</td></tr>
-<tr><td>C</td><td>&#8209;114</td><td>100</td><td>&#8209;125</td><td>&#8209;31</td></tr>
-<tr><td>G</td><td>&#8209;31</td><td>&#8209;125</td><td>100</td><td>&#8209;114</td></tr>
-<tr><td>T</td><td>&#8209;123</td><td>&#8209;31</td><td>&#8209;114</td><td>91</td></tr>
+<tr><td>A</td><td>91</td><td>-114</td><td>-31</td><td>-123</td></tr>
+<tr><td>C</td><td>-114</td><td>100</td><td>-125</td><td>-31</td></tr>
+<tr><td>G</td><td>-31</td><td>-125</td><td>100</td><td>-114</td></tr>
+<tr><td>T</td><td>-123</td><td>-31</td><td>-114</td><td>91</td></tr>
 </tbody></table>
 </td></tr></tbody></table>
 <p class=small>
 Default gap penalties are determined as follows.  If
-<code><a href="#option_match">&#8209;&#8209;match</a></code> is
+<code><a href="#option_match">--match</a></code> is
 specified, the open penalty is 3.25 times the mismatch penalty, and the extend
 penalty is 0.24375 times the mismatch penalty.  (These are the same ratios as
 BLASTZ&rsquo;s defaults.)  Both penalties are rounded up to the nearest integer.
@@ -1123,8 +1123,8 @@ Setting this as a percentage makes it easier to maintain consistency across
 runs.  The actual count is dependent on sequence length and composition as
 well as the step offset and seed pattern.  For example, Figure 4
 shows the variation among human chromosomes in hg18 for
-<code>&#8209;&#8209;seed=match13</code>, <code>&#8209;&#8209;step=15</code>, and
-<code>&#8209;&#8209;maxwordcount=90%</code>.  The gray bars show the percentage of
+<code>--seed=match13</code>, <code>--step=15</code>, and
+<code>--maxwordcount=90%</code>.  The gray bars show the percentage of
 seed word positions kept (the red line shows the ideal 90%).  The blue numbers
 show the equivalent count, which varies greatly.
 <p>
@@ -1154,7 +1154,7 @@ depending on <code>&lt;count&gt;</code>.  If <code>&lt;count&gt;</code> is 254
 or less, one byte is used;  if it is 65,534 or less, two bytes are used.
 <p class=small>
 The resulting masked intervals can be written to a file with the
-<code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file&gt;</a></code>
+<code><a href="#option_outputmasking">--outputmasking=&lt;file&gt;</a></code>
 option.
 </td>
 </tr>
@@ -1167,11 +1167,11 @@ The target seed word position table and seed (as well as the target sequence)
 are read from the specified <a href="#fmt_capsule">file</a>.  When this option
 is used, the normal target specifier is omitted from the command line, and the
 following options are not allowed:
-<code><a href="#option_step">&#8209;&#8209;step</a></code>,
-<code><a href="#option_mwcount">&#8209;&#8209;maxwordcount</a></code>,
-<code><a href="#option_masking">&#8209;&#8209;masking</a></code>,
-<code><a href="#options_seeding">&#8209;&#8209;seed</a></code>,
-<code><a href="#option_word">&#8209;&#8209;word</a></code>.
+<code><a href="#option_step">--step</a></code>,
+<code><a href="#option_mwcount">--maxwordcount</a></code>,
+<code><a href="#option_masking">--masking</a></code>,
+<code><a href="#options_seeding">--seed</a></code>,
+<code><a href="#option_word">--word</a></code>.
 </td>
 </tr>
 
@@ -1325,7 +1325,7 @@ possible.
 Require two nearby seeds on the same diagonal, separated by a number of bases
 in the given range.  See the <a href="#adv_patterns">Seed Patterns</a> section
 for more information.  This option cannot be used in conjunction with
-<code><a href="#option_recover">&#8209;&#8209;recoverseeds</a></code>.
+<code><a href="#option_recover">--recoverseeds</a></code>.
 </td>
 </tr>
 
@@ -1345,7 +1345,7 @@ Avoid losing seeds in hash collisions.  This will slow the alignment process
 considerably and cost more memory, and usually does not improve the results
 significantly.  See the <a href="#stage_gapfree">Gap-free Extension</a> stage
 for more information.  This option cannot be used in conjunction with
-<code><a href="#option_twins">&#8209;&#8209;twins</a></code>.
+<code><a href="#option_twins">--twins</a></code>.
 </td>
 </tr>
 
@@ -1500,12 +1500,12 @@ Don't adjust for entropy when qualifying HSPs.
 By default seeds are extended to HSPs using x-drop extension, with entropy
 adjustment.
 <p class=small>
-If <code><a href="#option_match">&#8209;&#8209;match</a></code> scoring is used, the
+If <code><a href="#option_match">--match</a></code> scoring is used, the
 default x-drop termination threshold is 10 times the square root of the
 mismatch penalty, rounded up to the nearest integer.  Otherwise the default
 is 10 times the A-vs.-A substitution score.
 <p class=small>
-If <code><a href="#option_match">&#8209;&#8209;match</a></code> scoring is used, the
+If <code><a href="#option_match">--match</a></code> scoring is used, the
 default HSP score threshold is 30 times the match reward (equivalent to the
 score of a 30-bp exact match).  Otherwise the default is 3000.
 </td>
@@ -1639,14 +1639,14 @@ This is discussed in
 By default gapped extension is performed, and alignment ends are trimmed
 to the locations giving the maximum score.
 <p class=small>
-If <code><a href="#option_match">&#8209;&#8209;match</a></code> scoring is used, the
+If <code><a href="#option_match">--match</a></code> scoring is used, the
 default y-drop threshold is twice the x-drop threshold (or if x-drop extension
 was not performed, twice what the default x-drop threshold would have been);
 otherwise it is the score of a 300-bp gap.
 <p class=small>
 The default for the gapped score threshold is to use the same value as the
 HSP threshold (which is settable via
-<code><a href="#option_hspthresh">&#8209;&#8209;hspthresh</a></code>).  If the HSP
+<code><a href="#option_hspthresh">--hspthresh</a></code>).  If the HSP
 threshold was <a href="#adaptive_thresh">adaptive</a>, then the lowest-scoring
 HSP that was kept is used for this default.  If x-drop extension was not
 performed, the value used is whatever the default HSP threshold would have been.
@@ -1711,7 +1711,7 @@ matched bases, <code class=nopad>min</code>&nbsp;&gt;&nbsp;0.
 of matched bases in the alignment.  This option is not valid with
 <a href="#fmt_qdna">quantum DNA</a>.
 <p class=small>
-For backwards compatibility, <code>&#8209;&#8209;matchcount=&lt;min&gt;</a></code> has the
+For backwards compatibility, <code>--matchcount=&lt;min&gt;</a></code> has the
 same meaning.
 </td>
 </tr>
@@ -1758,7 +1758,7 @@ number of gapped columns in the alignment (each column is counted as one gap).
 <td></td>
 <td>
 Do not output a trivial self-alignment block if the target and query sequences
-are identical.  Note that using <code><a href="#option_self">&#8209;&#8209;self</a></code>
+are identical.  Note that using <code><a href="#option_self">--self</a></code>
 automatically enables this option.
 </td>
 </tr>
@@ -1844,7 +1844,7 @@ Specifies the output format:
 or
 <code><a href="#fmt_general">general-[:&lt;fields&gt;]</a></code>.
 <p class=small>
-<code>&#8209;&#8209;format=none</code> can be used when no alignment output is desired.
+<code>--format=none</code> can be used when no alignment output is desired.
 </td>
 </tr>
 
@@ -1855,7 +1855,7 @@ or
 Create an additional output file suitable for plotting the alignment blocks
 with the <a href="http://www.r-project.org/">R statistical package</a>.  The
 output file is the same as would be produced by
-<code>&#8209;&#8209;format=<a href="#fmt_rdotplot">rdotplot</a></code>, but this option
+<code>--format=<a href="#fmt_rdotplot">rdotplot</a></code>, but this option
 allows you to create the dotplot file without having to run the alignment twice.
 </td>
 </tr>
@@ -1865,7 +1865,7 @@ allows you to create the dotplot file without having to run the alignment twice.
 <td></td>
 <td>
 Used in conjuction with the <a href="#fmt_sam">SAM</a> file format, allowing
-the specification of tags for SAM's <code>&#8209;RG</code> header line.
+the specification of tags for SAM's <code>-RG</code> header line.
 <code>&lt;tags&gt;</code> is a tab-delimited list of
 <code>&lt;tag&gt;:&lt;value&gt;</code> items.  See the SAM specification for
 details about which tags are required.  LASTZ does not validate whether the
@@ -1939,7 +1939,7 @@ Do not report a census of aligning bases.
 <td></td>
 <td>
 Used in conjuction with the
-<code><a href="#option_masking">&#8209;&#8209;masking=&lt;count&gt;</a></code> option.
+<code><a href="#option_masking">--masking=&lt;count&gt;</a></code> option.
 The masked target intervals, resulting from alignment with all queries, are
 written to a file in 
 <a href="#fmt_mask">sequence masking file</a> format.  The file is suitable
@@ -1948,9 +1948,9 @@ for later use with the
 <code><a href="#action_xmask">xmask</a></code>, and
 <code><a href="#action_nmask">nmask</a></code> sequence specifier actions.
 <p class=small>In contrast with 
-<code><a href="#option_outputmaskingsoft">&#8209;&#8209;outputmasking:soft=&lt;file&gt;</a></code>,
+<code><a href="#option_outputmaskingsoft">--outputmasking:soft=&lt;file&gt;</a></code>,
 only those intervals created by the
-<code><a href="#option_masking">&#8209;&#8209;masking=&lt;count&gt;</a></code> option
+<code><a href="#option_masking">--masking=&lt;count&gt;</a></code> option
 are reported.
 </td>
 </tr>
@@ -1960,7 +1960,7 @@ are reported.
 <td></td>
 <td>
 The same as
-<code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file&gt;</a></code>,
+<code><a href="#option_outputmasking">--outputmasking=&lt;file&gt;</a></code>,
 except that masked intervals are wriiten to a file in 
 <a href="#fmt_mask_3fields">three field sequence masking file</a> format, which
 includes sequence names.  The file is <em>not</em> suitable for later use as
@@ -1981,10 +1981,10 @@ for later use with the
 <code><a href="#action_xmask">xmask</a></code>, and
 <code><a href="#action_nmask">nmask</a></code> sequence specifier actions.
 <p class=small>In contrast with 
-<code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file&gt;</a></code>,
+<code><a href="#option_outputmasking">--outputmasking=&lt;file&gt;</a></code>,
 all masked intervals in the target sequence are reported, regardless of whether
 they were created by the
-<code><a href="#option_masking">&#8209;&#8209;masking=&lt;count&gt;</a></code> option
+<code><a href="#option_masking">--masking=&lt;count&gt;</a></code> option
 or were in the sequence as it was originally input.
 </td>
 </tr>
@@ -1994,7 +1994,7 @@ or were in the sequence as it was originally input.
 <td></td>
 <td>
 The same as
-<code><a href="#option_outputmaskingsoft">&#8209;&#8209;outputmasking:soft=&lt;file&gt;</a></code>,
+<code><a href="#option_outputmaskingsoft">--outputmasking:soft=&lt;file&gt;</a></code>,
 except that masked intervals are wriiten to a file in 
 <a href="#fmt_mask_3fields">three field sequence masking file</a> format, which
 includes sequence names.  The file is <em>not</em> suitable for later use as
@@ -2039,7 +2039,7 @@ and other related information.
 <td></td>
 <td>
 Write out alignments as segments, in the same <a href="#fmt_segments">format</a>
-used for input by the <code><a href="#option_segments">&#8209;&#8209;segments</a></code>
+used for input by the <code><a href="#option_segments">--segments</a></code>
 option.  These <dfn>anchor segments</dfn> can then be used to anchor alignments
 in a subsequent run of LASTZ.  This can be useful if you want to filter HSPs in
 some way before performing gapped extension, for example filtering them by
@@ -2095,7 +2095,7 @@ format, no census is reported, and no target table or capsule is written out.
 <td>
 Read arguments from a text file.  The arguments are parsed the same as they
 would be from the command-line, with the exception that they may appear on
-multiple lines in the file.  <code>&#8209;&#8209;include</code> can be used in conjunction
+multiple lines in the file.  <code>--include</code> can be used in conjunction
 with other command line arguments.
 <p class=small>
 Note that any shell-performed substitutions that would be performed on the
@@ -2111,10 +2111,10 @@ Set the amount of memory to allocate (in RAM) for trace-back information during
 the gapped extension stage.  <code>&lt;bytes&gt;</code> may contain an
 <code>M</code> or <code>K</code> unit suffix if desired (indicating a
 multiplier of 1,024 or 1,048,576, respectively).  For example,
-<code>&#8209;&#8209;allocate:traceback=80.0M</code> is the same as
-<code>&#8209;&#8209;allocate:traceback=83886080</code>.
+<code>--allocate:traceback=80.0M</code> is the same as
+<code>--allocate:traceback=83886080</code>.
 <p class=small>
-For backwards compatibility, <code>&#8209;&#8209;traceback=&lt;bytes&gt;</code> is also
+For backwards compatibility, <code>--traceback=&lt;bytes&gt;</code> is also
 accepted.
 </td>
 </tr>
@@ -2142,7 +2142,7 @@ needed is the sum of that needed for each sequence.
 <td>
 Predict the amount of memory (in RAM) that will be needed for query sequence
 data.  See
-<code><a href="#option_alloc_target">&#8209;&#8209;allocate:target</a></code> for further
+<code><a href="#option_alloc_target">--allocate:target</a></code> for further
 details.
 <p class=small>
 The memory needed for a sequence is <code>L+1</code>, where
@@ -2182,20 +2182,20 @@ There are several shortcut options to support the
 provide canned sets of option settings that work well for aligning an assembled
 reference sequence (as the target) with a set of shotgun reads (as the query).
 They are selected based on the expected level of identity between the sequences.
-For example, <code>&#8209;&#8209;yasra90</code> should be used when we expect 90% identity.
-The <code>&#8209;&#8209;yasraXXshort</code> options are appropriate when the reads are very
+For example, <code>--yasra90</code> should be used when we expect 90% identity.
+The <code>--yasraXXshort</code> options are appropriate when the reads are very
 short (less than 50 bp).
 
 <p>
 <table class=withlines><tbody>
 <tr class=sectend><td>Option       </td><td>Equivalent</td></tr>
-<tr><td><code>--yasra98</code>     </td><td><code>T=2 Z=20 &#8209;&#8209;match=1,6 O=8 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=98 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra95</code>     </td><td><code>T=2 Z=20 &#8209;&#8209;match=1,5 O=8 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=95 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra90</code>     </td><td><code>T=2 Z=20 &#8209;&#8209;match=1,5 O=6 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=90 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra85</code>     </td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,2O=4 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=85 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra75</code>     </td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,1O=3 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=75 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra95short</code></td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,7O=6 E=1 Y=14 K=10 L=14 &#8209;&#8209;identity=95 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
-<tr><td><code>--yasra85short</code></td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,3O=4 E=1 Y=14 K=11 L=14 &#8209;&#8209;identity=85 &#8209;&#8209;ambiguousn &#8209;&#8209;noytrim</code></td></tr>
+<tr><td><code>--yasra98</code>     </td><td><code>T=2 Z=20 --match=1,6 O=8 E=1 Y=20 K=22 L=30 --identity=98 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra95</code>     </td><td><code>T=2 Z=20 --match=1,5 O=8 E=1 Y=20 K=22 L=30 --identity=95 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra90</code>     </td><td><code>T=2 Z=20 --match=1,5 O=6 E=1 Y=20 K=22 L=30 --identity=90 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra85</code>     </td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,2O=4 E=1 Y=20 K=22 L=30 --identity=85 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra75</code>     </td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,1O=3 E=1 Y=20 K=22 L=30 --identity=75 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra95short</code></td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,7O=6 E=1 Y=14 K=10 L=14 --identity=95 --ambiguousn --noytrim</code></td></tr>
+<tr><td><code>--yasra85short</code></td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,3O=4 E=1 Y=14 K=11 L=14 --identity=85 --ambiguousn --noytrim</code></td></tr>
 </tbody></table>
 
 <p>
@@ -2203,20 +2203,20 @@ Occasionally, newer releases of LASTZ change the Yasra shortcut options.  This
 is done as an improvement, so most users will want to use the shortcuts shown
 above.  Hoever, in order to support backward compatibility for users that want
 to reproduce previous results, all previous versions of the shortcuts are
-included.  The syntax is <code>&#8209;&#8209;&lt;shortcut&gt;:&lt;version&gt;</code>, where
+included.  The syntax is <code>--&lt;shortcut&gt;:&lt;version&gt;</code>, where
 <code>&lt;version&gt;</code> is the LASTZ version number that contained the
 shortcut.
 
 <p>
 <table class=withlines><tbody>
 <tr class=sectend><td>Option                       </td><td>LASTZ version     </td><td>Equivalent</td></tr>
-<tr><td><code>--yasra98:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 &#8209;&#8209;match=1,6 O=8 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=98</code></td></tr>
-<tr><td><code>--yasra95:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 &#8209;&#8209;match=1,5 O=8 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=95</code></td></tr>
-<tr><td><code>--yasra90:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 &#8209;&#8209;match=1,5 O=6 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=90</code></td></tr>
-<tr><td><code>--yasra85:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,2O=4 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=85</code></td></tr>
-<tr><td><code>--yasra75:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,1O=3 E=1 Y=20 K=22 L=30 &#8209;&#8209;identity=75</code></td></tr>
-<tr><td><code>--yasra95short:&lt;version&gt;</code></td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,7O=6 E=1 Y=14 K=10 L=14 &#8209;&#8209;identity=95</code></td></tr>
-<tr><td><code>--yasra85short:&lt;version&gt;</code></td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; &#8209;&#8209;match=1,3O=4 E=1 Y=14 K=11 L=14 &#8209;&#8209;identity=85</code></td></tr>
+<tr><td><code>--yasra98:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 --match=1,6 O=8 E=1 Y=20 K=22 L=30 --identity=98</code></td></tr>
+<tr><td><code>--yasra95:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 --match=1,5 O=8 E=1 Y=20 K=22 L=30 --identity=95</code></td></tr>
+<tr><td><code>--yasra90:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 Z=20 --match=1,5 O=6 E=1 Y=20 K=22 L=30 --identity=90</code></td></tr>
+<tr><td><code>--yasra85:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,2O=4 E=1 Y=20 K=22 L=30 --identity=85</code></td></tr>
+<tr><td><code>--yasra75:&lt;version&gt;</code>     </td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,1O=3 E=1 Y=20 K=22 L=30 --identity=75</code></td></tr>
+<tr><td><code>--yasra95short:&lt;version&gt;</code></td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,7O=6 E=1 Y=14 K=10 L=14 --identity=95</code></td></tr>
+<tr><td><code>--yasra85short:&lt;version&gt;</code></td><td>1.02.45 or earlier</td><td><code>T=2 &nbsp;&nbsp;&nbsp;&nbsp; --match=1,3O=4 E=1 Y=14 K=11 L=14 --identity=85</code></td></tr>
 </tbody></table>
 
 <!-- Help -->
@@ -2323,7 +2323,7 @@ For BLASTZ compatibility, the alternative syntax
 both <code>&lt;start&gt;</code> and <code>&lt;end&gt;</code> are required.
 
 <p class=small>
-A &#147;zoom factor&#148; can also be included, using the syntax
+A "zoom factor" can also be included, using the syntax
 <code>&lt;start&gt;..&lt;end&gt;+&lt;zoom&gt;%</code>.  The specified interval
 is expanded on each end by <code>&lt;zoom&gt;</code> percent.  This is useful
 when you know, for example, the location of a gene, and would like to include
@@ -2343,7 +2343,7 @@ Additionally, if a subrange has <code>&lt;start&gt;</code> larger than
 used. However, this can lead to non-obvious interactions with other features
 such as strand reporting, sequence masking, and segment files, so it should
 be used with care.  Usually it is simpler to use the
-<code><a href="#option_strand">&#8209;&#8209;strand</a></code> options instead.
+<code><a href="#option_strand">--strand</a></code> options instead.
 <p class=small>
 Note that subrange positions are always measured from the start of the
 sequence provided in the file (i.e., <a href="#adv_coords">counting along the
@@ -2617,7 +2617,7 @@ A <code>-</code> (minus sign) is equivalent to swapping the endpoints in the
 sequence to be used instead of the sequence itself.  Again, this should be
 used with care, as it can lead to murky interactions with other features.
 In BLASTZ it was needed for searching only the minus strand, but LASTZ provides
-a <code><a href="#option_strand">&#8209;&#8209;strand</a></code> option for that.
+a <code><a href="#option_strand">--strand</a></code> option for that.
 
 <!---->
 <!-- Processing Stages in Detail -->
@@ -2677,10 +2677,10 @@ target sequence positions where that seed word occurs.
 <p>
 This table is one of the major space requirements of the program.  Both the
 memory and time required for seeding can be decreased by using sparse spacing.
-The <code><a href="#option_step">&#8209;&#8209;step</a></code> option sets a
+The <code><a href="#option_step">--step</a></code> option sets a
 <dfn>step size</dfn>: instead of examining every position, seed words are
 stored only for multiples of the step size.  Large step sizes (say,
-<code>&#8209;&#8209;step=100</code>) incur a loss of sensitivity, at least at the seeding
+<code>--step=100</code>) incur a loss of sensitivity, at least at the seeding
 stage.  However, to discover any gapped alignment block we only need to
 discover one seed (of many) in that alignment, so the actual sensitivity loss
 is small in most cases.  Section 6.2 of <a href="#harris_2007">[Harris 2007]</a>
@@ -2700,10 +2700,10 @@ advance, by using lower case.  Target and query words containing lower case
 bases are left out of the seed word position table and skipped during seeding,
 respectively, so they do not participate in the seeding stage.
 <li> If repeat locations are not known, the option
-<code><a href="#option_mwcount">&#8209;&#8209;maxwordcount</a></code> can be used to remove
+<code><a href="#option_mwcount">--maxwordcount</a></code> can be used to remove
 frequently occurring target seed words from the position table before query
 processing begins.
-<li> Dynamic masking (<code><a href="#option_masking">&#8209;&#8209;masking</a></code>) can
+<li> Dynamic masking (<code><a href="#option_masking">--masking</a></code>) can
 be used to mask target positions that have occurred in too many alignments;
 however this only affects subsequent query sequences.
 </ol>
@@ -2725,7 +2725,7 @@ thought of as a 12-mer exact match.
 <p>
 To locate seeds, the query sequence is parsed into seed words the same
 way the target is (except that
-<code><a href="#option_step">&#8209;&#8209;step</a></code> does not apply to the query;
+<code><a href="#option_step">--step</a></code> does not apply to the query;
 we look at every seed word).
 Each packed seed word is used as an index into the target seed word position
 table to find the target positions that have a <dfn>seed match</dfn> for this
@@ -2743,7 +2743,7 @@ before, but instead of a direct lookup, each word, called a <dfn>q-word</dfn>,
 is first converted to a <dfn>quantum seeding ball</dfn> of those DNA words that
 are most similar to it.  Similarity is determined by the scoring matrix; all
 words with a combined substitution score above the quantum seeding threshold
-(set by the <code><a href="#option_ball">&#8209;&#8209;ball</a></code> option) are
+(set by the <code><a href="#option_ball">--ball</a></code> option) are
 considered to be in the ball.  Then each word in the ball is looked up in the
 target seed word position table as usual, with all such hits considered to be
 seed matches for the q-word.
@@ -2782,7 +2782,7 @@ directions according to an extension rule, currently either
 <dfn>exact match</dfn>, <dfn>M-mismatch</dfn>, or <dfn>x-drop</dfn>.
 
 <p>
-Exact match extension (<code><a href="#option_exact">&#8209;&#8209;exact</a></code>) simply
+Exact match extension (<code><a href="#option_exact">--exact</a></code>) simply
 extends the seed until a mismatch is found.  If the resulting length is enough,
 the extended seed is kept as an HSP for further processing.  Exact match
 extension is most useful when the target and query are expected to be very
@@ -2790,17 +2790,17 @@ similar, e.g. when aligning short reads to a similar reference genome.
 
 <p>
 M-mismatch extension
-(<code><a href="#option_mismatch">&#8209;&#8209;&lt;M&gt;mismatch</a></code>) extends the
+(<code><a href="#option_mismatch">--&lt;M&gt;mismatch</a></code>) extends the
 seed to find the longest interval that includes the entire seed and contains
 no more than <code>M</code> mismatches.  If the resulting length is enough,
 the extended seed is kept as an HSP for further processing.  M-mismatch
 extension is most useful when the approximate divergence between the target
 and query is known, and HSPs of a known length are desired.
 It provides a way to specify both length and identity thresholds together,
-with more flexibility than <code>&#8209;&#8209;exact</code>.
+with more flexibility than <code>--exact</code>.
 
 <p>
-In x-drop extension (<code><a href="#option_xdrop">&#8209;&#8209;xdrop</a></code>), as we
+In x-drop extension (<code><a href="#option_xdrop">--xdrop</a></code>), as we
 extend in each direction we track the cumulative score for the extended match
 according to the substitution scoring matrix.  The extension is stopped when
 the score drops off by more than the given x-drop threshold; that is, when the
@@ -2810,10 +2810,10 @@ than <code>&lt;dropoff&gt;</code>.
 worse than &minus;<code class=nopad>&lt;dropoff&gt;</code> is encountered.)
 The extension is then trimmed back to the peak point.  If the combined score
 of the seed plus both extensions meets the threshold set by the
-<code><a href="#option_hspthresh">&#8209;&#8209;hspthresh</a></code> option, it qualifies
+<code><a href="#option_hspthresh">--hspthresh</a></code> option, it qualifies
 as an HSP and is kept for further processing.  Matches that do not meet the
 score threshold are discarded.
-The <code><a href="#option_entropy">&#8209;&#8209;entropy</a></code> options control
+The <code><a href="#option_entropy">--entropy</a></code> options control
 whether or not the scores are adjusted for nucleotide entropy when they are
 compared to the threshold.
 
@@ -2823,9 +2823,9 @@ Often it is not clear in advance what value to use for the x-drop method&rsquo;s
 HSP score threshold &mdash; set it too high and hardly anything will align, but
 too low and the program will be swamped and not finish.  LASTZ&rsquo;s adaptive
 scoring options
-(<code><a href="#option_topcount">&#8209;&#8209;hspthresh=top&lt;basecount&gt;</a></code>
+(<code><a href="#option_topcount">--hspthresh=top&lt;basecount&gt;</a></code>
 and
-<code><a href="#option_toppct">&#8209;&#8209;hspthresh=top&lt;percentage&gt;%</a></code>)
+<code><a href="#option_toppct">--hspthresh=top&lt;percentage&gt;%</a></code>)
 allow you to set the threshold indirectly to align the desired amount of the
 target (as an approximate number of bases or as a percentage, respectively).
 This way you can set it for, say, 10% (which will run quickly regardless of the
@@ -2848,7 +2848,7 @@ storing one position for each diagonal would require 2G bytes.  To save memory,
 LASTZ hashes diagonals to 16-bit values and tracks extensions only by the hash
 value.  While this saves space, it results in a miniscule loss of sensitivity
 &mdash; LASTZ may miss some seeds due to hash collisions.  Using
-<code><a href="#option_recover">&#8209;&#8209;recoverseeds</a></code> will prevent losing
+<code><a href="#option_recover">--recoverseeds</a></code> will prevent losing
 these seeds, but will slow the program significantly.  Moreover, since most
 true alignments contain many HSPs, with many seeds in each HSP, the vast
 majority of lost seeds have no effect on the final results.
@@ -2878,11 +2878,11 @@ the target.  (However, note that because the forward and reverse strands are
 processed in separate pipelines, it will not necessarily cause inversions to be
 discarded.)  If LASTZ&rsquo;s implementation of chaining is not suitable, it is
 possible to substitute another chaining program by first running LASTZ with the
-<code><a href="#option_nogapped">&#8209;&#8209;nogapped</a></code> and
-<code><a href="#option_writeseg">&#8209;&#8209;writesegments</a></code>
+<code><a href="#option_nogapped">--nogapped</a></code> and
+<code><a href="#option_writeseg">--writesegments</a></code>
 options to get the HSPs, running a separate chaining program to filter them,
 and then running the final stages of LASTZ on that output via the
-<code><a href="#option_segments">&#8209;&#8209;segments</a></code> option.
+<code><a href="#option_segments">--segments</a></code> option.
 
 <p>
 Figure 5(a) shows an alignment without chaining, while 5(b) shows the same
@@ -2956,7 +2956,7 @@ The anchors are then processed in the order of their HSP&rsquo;s score (highest
 first).  Gapped extension is performed
 independently in both directions from the anchor point, and the two resulting
 alignments are joined at the anchor.  If the total score meets the threshold
-specified by the <code><a href="#option_gapthresh">&#8209;&#8209;gappedthresh</a></code>
+specified by the <code><a href="#option_gapthresh">--gappedthresh</a></code>
 option, the joined alignment is kept and passed to the next stage; otherwise it
 is discarded. If the extension from one anchor happens to go through one or
 more other anchors, the redundant anchors are dropped from the list.
@@ -2978,14 +2978,14 @@ terminating at the point with the highest cumulative score.  The portion of
 the DP matrix examined is reduced by disallowing low-scoring regions (see
 <a href="#zhang_1998">[Zhang 1998]</a>): wherever the alignment score drops
 below the peak score seen so far by more than the threshold specified in the
-<code><a href="#option_ydrop">&#8209;&#8209;ydrop</a></code> option, the DP matrix is
+<code><a href="#option_ydrop">--ydrop</a></code> option, the DP matrix is
 truncated and no further cells are computed along that row or column.
 By default the extension is then trimmed back to the location of the peak
 score; thus the extension normally ends when all remaining sub-alignment
 possibilities (paths in the DP matrix) begin with sections that score worse
 than &minus;<code class=nopad>&lt;dropoff&gt;</code>.  However for alignments
 where the extension reaches the end of the sequence, you can suppress this
-trimming by specifying the <code><a href="#option_noytrim">&#8209;&#8209;noytrim</a></code>
+trimming by specifying the <code><a href="#option_noytrim">--noytrim</a></code>
 option, which is recommended when aligning short reads.
 
 <p>
@@ -3013,13 +3013,13 @@ Figure 7
 Whatever alignment blocks have made it through the above gauntlet are then
 subjected to
 identity, continuity, coverage and match count filtering (as specified by the
-<code><a href="#option_identity">&#8209;&#8209;identity</a></code>,
-<code><a href="#option_continuity">&#8209;&#8209;continuity</a></code>,
-<code><a href="#option_coverage">&#8209;&#8209;coverage</a></code>,
-<code><a href="#option_filter_nmatch">&#8209;&#8209;filter=nmatch</a></code>,
-<code><a href="#option_filter_nmismatch">&#8209;&#8209;filter=nmismatch</a></code>,
-<code><a href="#option_filter_ngap">&#8209;&#8209;filter=ngap</a></code>and
-<code><a href="#option_filter_cgap">&#8209;&#8209;filter=cgap</a></code> options,
+<code><a href="#option_identity">--identity</a></code>,
+<code><a href="#option_continuity">--continuity</a></code>,
+<code><a href="#option_coverage">--coverage</a></code>,
+<code><a href="#option_filter_nmatch">--filter=nmatch</a></code>,
+<code><a href="#option_filter_nmismatch">--filter=nmismatch</a></code>,
+<code><a href="#option_filter_ngap">--filter=ngap</a></code>and
+<code><a href="#option_filter_cgap">--filter=cgap</a></code> options,
 respectively). Blocks that do not meet the specified range for each feature are
 discarded.
 
@@ -3033,7 +3033,7 @@ number of mismatches.
 Characters that differ only in upper vs. lower case are
 counted as matches.  Columns containing gaps or non-ACGT characters play no
 part in this computation, and it is independent of the settings for
-<code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code> and
+<code><a href="#option_ambign">--ambiguous=n</a></code> and
 <code><a href="#fmt_scoring_keywords">bad_score</a></code>.  Identity cannot
 be determined for alignments with <a href="#fmt_qdna">quantum DNA</a>, because
 of the potential ambiguity of the symbols.
@@ -3097,7 +3097,7 @@ block, counting each gapped column as a separate gap.
 <p>
 Once the above stages have been performed, it is not uncommon to have regions
 left over in which no alignment has been found.  In the interpolation stage
-(activated by the <code><a href="#option_inner">&#8209;&#8209;inner</a></code> option) we
+(activated by the <code><a href="#option_inner">--inner</a></code> option) we
 repeat the seeding through gapped extension stages in these leftover regions,
 at a presumably higher sensitivity.  Using such high sensitivity from the
 outset would be computationally prohibitive (due to the excessive number of
@@ -3155,7 +3155,7 @@ lastz target query --inner=1000
 <p>
 The alignment blocks found by the preceding pipeline of stages are written to
 <code>stdout</code> (or to a file specified with the
-<code><a href="#option_output">&#8209;&#8209;output</a></code> option) in the requested
+<code><a href="#option_output">--output</a></code> option) in the requested
 <a href="#option_format">format</a>.
 These may be seeds, gap-free HSPs, or gapped local alignments, depending on
 which stages were performed.  There is no particular order to the alignment
@@ -3182,7 +3182,7 @@ indirectly via an <a href="#fmt_hsx">HSX</a> index.  These
 sequences contain a series of <code>A</code>, <code>C</code>, <code>G</code>,
 <code>T</code>, and <code>N</code> characters in upper or lower case.
 Lower case indicates repeat-masked bases, while <code>N</code>s represent
-unknown bases if the <code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code>
+unknown bases if the <code><a href="#option_ambign">--ambiguous=n</a></code>
 option is specified.  (By default, a run of <code>N</code>s or <code>X</code>s
 is used to separate sequences that have been catenated together for processing,
 but this is now deprecated; see
@@ -3222,7 +3222,7 @@ Note that although the official FASTA specification allows the character
 as a splicing character.  However, LASTZ does <em>not</em> currently support
 IUPAC-IUB ambiguity codes other than <code>N</code> (such as <code>R</code>,
 <code>W</code>, etc.),
-beyond the treatment afforded by <code>&#8209;&#8209;ambiguous=iupac</code>.
+beyond the treatment afforded by <code>--ambiguous=iupac</code>.
 <p>
 A special case, non-conforming to the official standard, is made to allow a
 special user-specified <a href="#adv_separator">separator character</a>.
@@ -3250,7 +3250,7 @@ over time in the Bioformatics community.  LASTZ only supports a subset of this
 format, prohibiting line-wrapping within DNA or quality sequences.
 <p>
 Each sequence consists of four lines.  The first line begins with a
-<code>&#8209;</code> followed by the name of the sequence.  The second line contains
+<code>-</code> followed by the name of the sequence.  The second line contains
 nucleotide characters.  The third line begins with a <code>+</code>, optionally
 followed by the name of the sequence (which, if present must match that of the
 first line).  The fourth line contains quality characters.
@@ -3454,9 +3454,9 @@ This file is used with the <code><a href="#action_xmask">xmask</a></code> and
 <code><a href="#action_nmask">nmask</a></code> actions in a
 <a href="#seq_spec">sequence specifier</a>.
 It can also be created by using the 
-<code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file&gt;</a></code>
+<code><a href="#option_outputmasking">--outputmasking=&lt;file&gt;</a></code>
 or
-<code><a href="#option_outputmaskingsoft">&#8209;&#8209;outputmasking:soft=&lt;file&gt;</a></code>
+<code><a href="#option_outputmaskingsoft">--outputmasking:soft=&lt;file&gt;</a></code>
 options.
 It consists of one interval per
 line, without sequence names.  Lines beginning with a <code>#</code> are
@@ -3473,7 +3473,7 @@ Locations are one-based and inclusive on both ends (i.e., they use the
 Note that the masking intervals are
 <a href="#adv_coords">counted along the forward strand</a>, even if we are only
 aligning to the reverse complement of the query specifier (i.e. for
-<code><a href="#option_strand">&#8209;&#8209;strand</a>=minus</code>).
+<code><a href="#option_strand">--strand</a>=minus</code>).
 
 <p>
 Here is an example.  If the target sequence is hg18.chr1, this would mask the
@@ -3499,9 +3499,9 @@ This file format is output only.  LASTZ does not recognize input files in this
 format.
 <p>
 This file is created by using the 
-<code><a href="#option_outputmaskingplus">&#8209;&#8209;outputmasking+=&lt;file&gt;</a></code>
+<code><a href="#option_outputmaskingplus">--outputmasking+=&lt;file&gt;</a></code>
 or
-<code><a href="#option_outputmaskingplussoft">&#8209;&#8209;outputmasking+:soft=&lt;file&gt;</a></code>
+<code><a href="#option_outputmaskingplussoft">--outputmasking+:soft=&lt;file&gt;</a></code>
 options.
 It consists of one interval per line, with sequence names.
 <p>
@@ -3514,7 +3514,7 @@ Locations are one-based and inclusive on both ends (i.e., they use the
 Note that the masking intervals are
 <a href="#adv_coords">counted along the forward strand</a>, even if we are only
 aligning to the reverse complement of the query specifier (i.e. for
-<code><a href="#option_strand">&#8209;&#8209;strand</a>=minus</code>).
+<code><a href="#option_strand">--strand</a>=minus</code>).
 
 <!-- Scoring File -->
 <div><a name="fmt_scoring"></a></div>
@@ -3522,7 +3522,7 @@ aligning to the reverse complement of the query specifier (i.e. for
 
 
 <p>
-This file is used with the <code><a href="#option_scores">&#8209;&#8209;scores</a></code>
+This file is used with the <code><a href="#option_scores">--scores</a></code>
 option to specify a set of (mostly) scoring-related parameters en masse.
 The score set consists of a substitution matrix and other settings.  The other
 settings come first and are individually explained in the
@@ -3613,7 +3613,7 @@ sequences.  There is no corresponding command-line option.
 This is used as a default for all cells of the scoring matrix that are not
 otherwise set (either by the user or by LASTZ&rsquo;s defaults).  This is the
 score used for <code>N</code>s (unless
-<code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code> is specified on the
+<code><a href="#option_ambign">--ambiguous=n</a></code> is specified on the
 command line).
 <p class=small>
 The default value is &minus;100.  There is no corresponding command-line option.
@@ -3625,7 +3625,7 @@ The default value is &minus;100.  There is no corresponding command-line option.
 <td><code>&lt;penalty&gt;</code></td>
 <td>
 This is identical to the <code>&lt;open&gt;</code> field of the
-<code><a href="#option_gap">&#8209;&#8209;gap</a></code> command line option.
+<code><a href="#option_gap">--gap</a></code> command line option.
 </td>
 </tr>
 
@@ -3634,7 +3634,7 @@ This is identical to the <code>&lt;open&gt;</code> field of the
 <td><code>&lt;penalty&gt;</code></td>
 <td>
 This is identical to the <code>&lt;extend&gt;</code> field of the
-<code><a href="#option_gap">&#8209;&#8209;gap</a></code> command line option.
+<code><a href="#option_gap">--gap</a></code> command line option.
 </td>
 </tr>
 
@@ -3643,7 +3643,7 @@ This is identical to the <code>&lt;extend&gt;</code> field of the
 <td><code>&lt;offset&gt;</code></td>
 <td>
 This is identical to the
-<code><a href="#option_step">&#8209;&#8209;step</a></code> command line option.
+<code><a href="#option_step">--step</a></code> command line option.
 </td>
 </tr>
 
@@ -3651,8 +3651,8 @@ This is identical to the
 <td><code>seed</code></td>
 <td><code>&lt;strategy&gt;</code></td>
 <td>
-This corresponds to the <a href="#options_seeding"><code>&#8209;&#8209;seed</code> and
-<code>&#8209;&#8209;transition</code></a> command line options.
+This corresponds to the <a href="#options_seeding"><code>--seed</code> and
+<code>--transition</code></a> command line options.
 <code>&lt;strategy&gt;</code> must be one of the following, with no spaces:
 	<br><span class=mtab></span><code>12of19,transition</code>
 	<br><span class=mtab></span><code>12of19,notransition</code>
@@ -3667,7 +3667,7 @@ This corresponds to the <a href="#options_seeding"><code>&#8209;&#8209;seed</cod
     <code>&lt;percentage&gt;%</code></td>
 <td>
 This is identical to the
-<code><a href="#option_ball">&#8209;&#8209;ball</a></code> command line option.
+<code><a href="#option_ball">--ball</a></code> command line option.
 </td>
 </tr>
 
@@ -3676,7 +3676,7 @@ This is identical to the
 <td><code>&lt;dropoff&gt;</code></td>
 <td>
 This is identical to the
-<code><a href="#option_xdrop">&#8209;&#8209;xdrop</a></code> command line option.
+<code><a href="#option_xdrop">--xdrop</a></code> command line option.
 </td>
 </tr>
 
@@ -3685,10 +3685,10 @@ This is identical to the
 <td><code>&lt;score&gt;</code></td>
 <td>
 This is identical to the
-<code><a href="#option_hspthresh">&#8209;&#8209;hspthresh</a></code> command line option,
+<code><a href="#option_hspthresh">--hspthresh</a></code> command line option,
 except that it does not currently support the
-<code>&#8209;&#8209;hspthresh=top&lt;basecount&gt;</code> or
-<code>&#8209;&#8209;hspthresh=top&lt;percentage&gt;%</code> variants.
+<code>--hspthresh=top&lt;basecount&gt;</code> or
+<code>--hspthresh=top&lt;percentage&gt;%</code> variants.
 </td>
 </tr>
 
@@ -3697,7 +3697,7 @@ except that it does not currently support the
 <td><code>&lt;dropoff&gt;</code></td>
 <td>
 This is identical to the
-<code><a href="#option_ydrop">&#8209;&#8209;ydrop</a></code> command line option.
+<code><a href="#option_ydrop">--ydrop</a></code> command line option.
 </td>
 </tr>
 
@@ -3706,7 +3706,7 @@ This is identical to the
 <td><code>&lt;score&gt;</code></td>
 <td>
 This is identical to the
-<code><a href="#option_gapthresh">&#8209;&#8209;gappedthresh</a></code> command line option.
+<code><a href="#option_gapthresh">--gappedthresh</a></code> command line option.
 </td>
 </tr>
 
@@ -3718,7 +3718,7 @@ This is identical to the
 
 <p>
 When LASTZ is asked to infer substitution scores and/or gap penalties from the
-input sequences (e.g. via the <code><a href="#option_infer">&#8209;&#8209;infer</a></code>
+input sequences (e.g. via the <code><a href="#option_infer">--infer</a></code>
 option), this file is used to set parameters that control the inference
 process.
 
@@ -3777,8 +3777,8 @@ The default is <code>inference_scale=100</code>.
 
 <p>
 <code>hsp_threshold</code> and <code>gapped_threshold</code> correspond to
-the command line <code><a href="#option_hspthresh">&#8209;&#8209;hspthresh</a></code> and
-<code><a href="#option_gapthresh">&#8209;&#8209;gappedthresh</a></code> options.
+the command line <code><a href="#option_hspthresh">--hspthresh</a></code> and
+<code><a href="#option_gapthresh">--gappedthresh</a></code> options.
 The defaults are <code>hsp_threshold=3000</code> and
 <code>gapped_threshold=hsp_threshold</code>.
 
@@ -3793,14 +3793,14 @@ The defaults are <code>max_sub_iterations=30</code> and
 <p>
 <code>gap_open_penalty</code> and <code>gap_extend_penalty</code> correspond to
 the command line
-<code><a href="#option_gap">&#8209;&#8209;gap=[&lt;open&gt;,]&lt;extend&gt;</a></code>
+<code><a href="#option_gap">--gap=[&lt;open&gt;,]&lt;extend&gt;</a></code>
 option.  These are used for the first iteration of gap-scoring inference.
 The defaults are <code>gap_open_penalty=3.25*worst_substitution</code> and
 <code>gap_extend_penalty=0.24375*worst_substitution</code>.
 
 <p>
 <code>step</code> corresponds to the command line
-<code><a href="#option_step">&#8209;&#8209;step</a></code> option.  A large step, e.g.
+<code><a href="#option_step">--step</a></code> option.  A large step, e.g.
 <code>step=100</code>, could potentially speed up the inference process.
 Ideally, this would base the inference on a sample of only one percent of the
 whole.  However, the sample actually ends up larger than that and is biased
@@ -3812,7 +3812,7 @@ The default is <code>step=1</code>.
 
 <p>
 <code>entropy</code> corresponds to the command line
-<code><a href="#option_entropy">&#8209;&#8209;entropy</a></code> option.  Legal values are
+<code><a href="#option_entropy">--entropy</a></code> option.  Legal values are
 <code>on</code> or <code>off</code>.  If on, sequence entropy is incorporated
 when filtering HSPs.  The default is <code>entropy=on</code>.
 
@@ -3887,7 +3887,7 @@ A segment file describes a list of segments representing gap-free alignments.
 This list is either produced internally by LASTZ as a result of the
 gap-free extension stage (see <a href="#overview">Overview</a>), or read from
 a user-supplied file via the
-<code><a href="#option_segments">&#8209;&#8209;segments</a></code> option.  The latter
+<code><a href="#option_segments">--segments</a></code> option.  The latter
 causes LASTZ to skip the indexing, seeding, and gap-free extension stages and
 begin with the chaining stage (or the next specified stage, if chaining is not
 requested).
@@ -3965,9 +3965,9 @@ files, and it is not easy for humans to read.
 (same specification at <a href="http://www.bx.psu.edu/miller_lab/">PSU</a>)
 
 <p>
-The option <code><a href="#option_format">&#8209;&#8209;format=lav+text</a></code> adds
+The option <code><a href="#option_format">--format=lav+text</a></code> adds
 <a href="#fmt_text">textual output</a> for each alignment block (in the same
-format as the <code>&#8209;&#8209;format=text</code> option), intermixed with the LAV
+format as the <code>--format=text</code> option), intermixed with the LAV
 format.  Such files are unlikely to be recognized by any LAV-reading program.
 
 <!-- AXT -->
@@ -3980,7 +3980,7 @@ AXT is a pairwise alignment format popular at UCSC and PSU.
 <a href="http://genome.ucsc.edu/goldenPath/help/axt.html"
 >UCSC&nbsp;AXT&nbsp;specification</a>
 <p>
-The option <code><a href="#option_format">&#8209;&#8209;format=axt+</a></code> reports
+The option <code><a href="#option_format">--format=axt+</a></code> reports
 additional statistics with each block, in the form of comments.  The exact
 content of these comment lines may change in future releases of LASTZ.
 
@@ -3996,11 +3996,11 @@ the target sequence, and the second from the query.
 <a href="http://genome.ucsc.edu/FAQ/FAQformat#format5"
 >UCSC&nbsp;MAF&nbsp;specification</a>
 <p>
-The option <code><a href="#option_format">&#8209;&#8209;format=maf+</a></code> reports
+The option <code><a href="#option_format">--format=maf+</a></code> reports
 additional statistics with each block, in the form of comments.  The exact
 content of these comment lines may change in future releases of LASTZ.
 <p>
-The option <code><a href="#option_format">&#8209;&#8209;format=maf-</a></code> suppresses
+The option <code><a href="#option_format">--format=maf-</a></code> suppresses
 the MAF header and any comments.  This makes it suitable for concatenating
 output from multiple runs.
 <p>
@@ -4023,14 +4023,14 @@ at SourceForge.
 <p>
 For SAM files, LASTZ assumes that the target sequence is the reference and
 that query sequence(s) are short reads.  For alignments that don't reach the
-end of a query, <code><a href="#option_format">&#8209;&#8209;format=sam</a></code> uses
-"hard clipping", while <code><a href="#option_format">&#8209;&#8209;format=softsam</a></code>
+end of a query, <code><a href="#option_format">--format=sam</a></code> uses
+"hard clipping", while <code><a href="#option_format">--format=softsam</a></code>
 uses "soft clipping".  See the section on "clipped alignment" in the SAM
 specification for an explanation of what this means.
 
 <p>
-The options <code><a href="#option_format">&#8209;&#8209;format=sam-</a></code> and
-<code><a href="#option_format">&#8209;&#8209;format=softsam-</a></code> suppress the SAM
+The options <code><a href="#option_format">--format=sam-</a></code> and
+<code><a href="#option_format">--format=softsam-</a></code> suppress the SAM
 header lines.  This makes them suitable for concatenating output from multiple
 runs.
 
@@ -4048,10 +4048,10 @@ The format has since been adapted in different forms, as
 and as an
 <a href="http://samtools.sourceforge.net/SAM1.pdf">extended cigar string</a>
 in <a href="http://samtools.sourceforge.net">SAMtools</a>.  For
-<code><a href="#option_format">&#8209;&#8209;format=cigar</a></code>, LASTZ implements
+<code><a href="#option_format">--format=cigar</a></code>, LASTZ implements
 Exonerate CIGAR.  LASTZ implements other CIGAR variants for
-<code><a href="#option_format">&#8209;&#8209;format=sam</a></code>
-and as fields for <code><a href="#option_format">&#8209;&#8209;format=general</a></code>.
+<code><a href="#option_format">--format=sam</a></code>
+and as fields for <code><a href="#option_format">--format=general</a></code>.
 
 <p>
 <a href="http://www.ebi.ac.uk/~guy/exonerate/exonerate.man.html/">Exonerate CIGAR</a>
@@ -4076,9 +4076,9 @@ some variants the length is omitted if it is 1;  in other variants
 <code>H</code> runs to describe clipping operations for short sequences.
 LASTZ implements combinations of these variants where appropriate;  details
 are described in
-<code><a href="#fmt_gen_cigar">&#8209;&#8209;format=general:cigar</a></code>,
-<code><a href="#fmt_gen_cigarx">&#8209;&#8209;format=general:cigarx</a></code>
-and <code><a href="#fmt_sam">&#8209;&#8209;format=sam</a></code>.
+<code><a href="#fmt_gen_cigar">--format=general:cigar</a></code>,
+<code><a href="#fmt_gen_cigarx">--format=general:cigarx</a></code>
+and <code><a href="#fmt_sam">--format=sam</a></code>.
 
 <p>
 <div><a name="ex_cigar"></a></div>
@@ -4096,27 +4096,27 @@ consider the following alignment of a short 61-bp query to a longer target.
 </pre>
 
 <p>
-For <code>&#8209;&#8209;format=cigar</code>, the alignment would be described by this line:
+For <code>--format=cigar</code>, the alignment would be described by this line:
 <pre>
     cigar: query 3 56 + target &lt;start&gt; &lt;end&gt; &lt;strand&gt; &lt;score&gt; M 24 I 3 M 7 D 2 M 19
 </pre>
 
 <p>
-For <code><a href="#fmt_gen_cigar">&#8209;&#8209;format=general:cigar</a></code>, the
+For <code><a href="#fmt_gen_cigar">--format=general:cigar</a></code>, the
 alignment path would be described by this field:
 <pre>
     24M3I7M2D19M
 </pre>
 
 <p>
-For <code><a href="#fmt_gen_cigarx">&#8209;&#8209;format=general:cigarx</a></code>, the
+For <code><a href="#fmt_gen_cigarx">--format=general:cigarx</a></code>, the
 alignment path would be described by this field:
 <pre>
     16=X7=3I7=2DX18=
 </pre>
 
 <p>
-For <code><a href="#fmt_sam">&#8209;&#8209;format=sam</a></code>, the alignment path would
+For <code><a href="#fmt_sam">--format=sam</a></code>, the alignment path would
 be described by this field:
 <pre>
     3H24M3I7M2D19M5H
@@ -4228,7 +4228,7 @@ Note that there are no lines for EAYGRGI01BIQCW, indicating a
 perfect match for that block (i.e., no differences).
 
 <p>
-Sample output for <code>&#8209;&#8209;format=differences</code>.
+Sample output for <code>--format=differences</code>.
 <pre>
      (1)     (2)      (3)  (4)   (5)         (6)       (7) (8) (9) (10) (11)(12)  (13)     (14)
     chr22 14485783 14485784 + 49691432  EAYGRGI02GQ0SL 167 167  +  303   A   -   TGAGA... TGAGA...
@@ -4244,7 +4244,7 @@ Sample output for <code>&#8209;&#8209;format=differences</code>.
 
 <p>
 Sample output for
-<code>&#8209;&#8209;format=general:name1,zstart1,end1,strand1,size1,name2,zstart2+,end2+,strand2,size2,text1,text2</code>.
+<code>--format=general:name1,zstart1,end1,strand1,size1,name2,zstart2+,end2+,strand2,size2,text1,text2</code>.
 <pre>
     chr22 14485616 14485920 + 49691432  EAYGRGI02GQ0SL 0   303  +  303   TGAGA... TGAGA...
     chr22 14731668 14731964 + 49691432  EAYGRGI01EAV19 0   297  -  298   CTTCT... CTTCT...
@@ -4320,12 +4320,12 @@ and for <a href="#adv_shell">filtering with shell commands</a>.
 <p>
 The syntax for this option is:
 <pre>
-    &#8209;&#8209;format=general[:&lt;fields&gt;]
+    --format=general[:&lt;fields&gt;]
 </pre>
 where <code>&lt;fields&gt;</code> is a comma-separated list of field names in
 any desired order, with no spaces.  For example
 <pre>
-    &#8209;&#8209;format=general:nmismatch,name1,strand1,start1,end1,name2,strand2,start2,end2
+    --format=general:nmismatch,name1,strand1,start1,end1,name2,strand2,start2,end2
 </pre>
 will report each aligned interval pair and the number of mismatches in the
 alignment of that pair, like this:
@@ -4356,7 +4356,7 @@ fields are printed, in this order:&nbsp;
 <code>coverage</code>.&nbsp;
 
 <p>
-The option <code>&#8209;&#8209;format=mapping</code> is a shortcut for <code>&#8209;&#8209;format=general</code>
+The option <code>--format=mapping</code> is a shortcut for <code>--format=general</code>
 with the following fields:&nbsp;
 <code>name1</code>, <code>zstart1</code>, <code>end1</code>,
 <code>name2</code>, <code>strand2</code>, <code>zstart2+</code>,
@@ -4366,8 +4366,8 @@ with the following fields:&nbsp;
 <p>
 Field names are normally included as column headers in the first row of the
 output, preceded by a <code>#</code>.  The options
-<code><a href="#option_format">&#8209;&#8209;format=general-[:&lt;fields&gt;]</a></code>
-and <code>&#8209;&#8209;format=mapping-</code> suppress column headers.  This makes
+<code><a href="#option_format">--format=general-[:&lt;fields&gt;]</a></code>
+and <code>--format=mapping-</code> suppress column headers.  This makes
 them suitable for concatenating output from multiple runs.
 
 <p>
@@ -4926,9 +4926,9 @@ This default treatment of non-ACGT characters also works well when
 <code>X</code>s or <code>N</code>s are used to mask out
 regions that should not be aligned.  However, it is inappropriate when the
 sequences contain <code>N</code>s to represent ambiguous bases.  To handle this
-case, LASTZ provides the <code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code>
+case, LASTZ provides the <code><a href="#option_ambign">--ambiguous=n</a></code>
 option, which causes substitutions with <code>N</code> to be scored as zero.
-Additionally, the <code><a href="#option_iupac">&#8209;&#8209;ambiguous=iupac</a></code> option
+Additionally, the <code><a href="#option_iupac">--ambiguous=iupac</a></code> option
 causes the other IUPAC-IUB ambiguity codes (<code>B, D, H, K, M, R, S, V,
 W,</code> and <code>Y</code>) to be treated this same as an ambiguous
 <code>N</code>.
@@ -5168,25 +5168,25 @@ allowed only if it is a transition (A&harr;G or C&harr;T).
 <pre>
     --seed=&lt;pattern&gt;
 </pre>
-The default seed is <code>&#8209;&#8209;seed=1110100110010101111</code>, which is the same
+The default seed is <code>--seed=1110100110010101111</code>, which is the same
 12-of-19 seed used as the default in BLASTZ.
 
 <h4>Half-weight seed patterns:</h4>
 If a seed pattern consists of only <code>0</code>s and <code>T</code>s, it is
 implemented internally as a half-weight seed, which uses much less memory
 (the same amount as a normal seed pattern half as long).  Additionally,
-<code>&#8209;&#8209;seed=half&lt;length&gt;</code> can be used as shorthand to specify a
+<code>--seed=half&lt;length&gt;</code> can be used as shorthand to specify a
 space-free half-weight seed (i.e., all <code>T</code>s).
 
 <h4>Single, double, or no transitions:</h4>
 By default, one match position (a <code>1</code> in a spaced seed, or any
 position in an N-mer match) is allowed to be a transition instead of a true
-match.  <code>&#8209;&#8209;notransition</code> disables this.  Alternatively,
-<code>&#8209;&#8209;transition=2</code> allows any <em>two</em> match positions to be
+match.  <code>--notransition</code> disables this.  Alternatively,
+<code>--transition=2</code> allows any <em>two</em> match positions to be
 transitions.
 
 <h4>Filtering on transversions and matches:</h4>
-The <code>&#8209;&#8209;filter</code> option imposes additional requirements on the number
+The <code>--filter</code> option imposes additional requirements on the number
 of transversions and matches in a valid seed.  This is especially useful in
 conjunction with half-weight patterns.  For example,
 <pre>
@@ -5213,7 +5213,7 @@ first hit and the beginning of the second) must be at least
 <code>&lt;minsep&gt;</code> but not more than <code>&lt;maxsep&gt;</code>.
 If <code>&lt;minsep&gt;</code> is omitted, zero is used (which means the
 twin seeds may be adjacent but not overlap).  Negative values <em>can</em>
-be used; for example <code>&#8209;&#8209;twins=&#8209;5..10</code>
+be used; for example <code>--twins=-5..10</code>
 means the twins can overlap
 by as much as 5 bases or can have as much as 10 bases between them.
 
@@ -5231,14 +5231,14 @@ particular chromosome, you aren't interested in learning where &mdash; all you
 want to know is whether it aligned or not.
 
 <p>
-The <code><a href="#option_anyornone">&#8209;&#8209;anyornone</a></code> option is designed
+The <code><a href="#option_anyornone">--anyornone</a></code> option is designed
 for such cases, and can significantly improve alignment speed.  Once any
 qualifying alignment has been found, processing for the current query is
 halted.  The alignment is reported to the output, and then we immediately begin
 processing the next query.  A qualifying alignment is one that would normally
 be output given the other parameter settings; for example it satisfies the
-scoring thresholds (<code><a href="#option_hspthresh">&#8209;&#8209;hspthresh</a></code>
-and/or <code><a href="#option_gapthresh">&#8209;&#8209;gappedthresh</a></code>) and any
+scoring thresholds (<code><a href="#option_hspthresh">--hspthresh</a></code>
+and/or <code><a href="#option_gapthresh">--gappedthresh</a></code>) and any
 <a href="#options_backend">back-end filters</a>.
 
 <p>
@@ -5277,10 +5277,10 @@ happens quite often when aligning short reads.
 
 <p>
 Consider the following alignment of a 50-base query to a chromosome target, and
-suppose we are using <code><a href="#option_match">&#8209;&#8209;match=1,5</a></code>,
-<code><a href="#option_gap">&#8209;&#8209;gap=6,1</a></code>,
-<code><a href="#option_identity">&#8209;&#8209;identity=97</a></code>, and
-<code><a href="#option_coverage">&#8209;&#8209;coverage=95</a></code>.  The entire
+suppose we are using <code><a href="#option_match">--match=1,5</a></code>,
+<code><a href="#option_gap">--gap=6,1</a></code>,
+<code><a href="#option_identity">--identity=97</a></code>, and
+<code><a href="#option_coverage">--coverage=95</a></code>.  The entire
 alignment as shown has 97.9% identity (46/47) and 100% coverage.  However, the
 first five bases (<code>AGAAC</code> vs. <code>AGAAG</code>) have a negative
 score: four matches at +1 each and one mismatch at &minus;5 gives a score
@@ -5291,7 +5291,7 @@ alignment is discarded.  The overall result is that we will discard reads that
 we don't want to, and we will see a bias against mismatches near the ends of
 reads.  (Note that this anomaly arises because the alignment is terminated
 abruptly by the end of the sequence rather than normally by a low-scoring
-region; also the <code>&#8209;&#8209;coverage</code> option is more commonly used with
+region; also the <code>--coverage</code> option is more commonly used with
 short reads than with longer sequences.)
 
 <p>
@@ -5305,13 +5305,13 @@ short reads than with longer sequences.)
 
 <p>
 To avoid this behavior, use the
-<code><a href="#option_noytrim">&#8209;&#8209;noytrim</a></code> option when aligning short
+<code><a href="#option_noytrim">--noytrim</a></code> option when aligning short
 reads.  This causes LASTZ to refrain from trimming such alignments back to the
 highest-scoring location.  Specifically, if the
 <a href="#stage_gapped">gapped extension</a> process encounters the end of the
 sequence, it will keep that as the end of the alignment.  In this case a
 negatively-scoring prefix or suffix will be kept as long as it does not score
-worse than the <code><a href="#option_ydrop">&#8209;&#8209;ydrop</a></code> value.
+worse than the <code><a href="#option_ydrop">--ydrop</a></code> value.
 
 <!-- Shingle Overlap -->
 <div><a name="adv_shingle"></a></div>
@@ -5382,10 +5382,10 @@ To create a capsule file, use a command like this:
     lastz &lt;target&gt; --writecapsule=&lt;capsule_file&gt; [&lt;seeding_options&gt;]
 </pre>
 Applicable seeding options are
-<code><a href="#options_seeding">&#8209;&#8209;seed</a></code>,
-<code><a href="#option_step">&#8209;&#8209;step</a></code>,
-<code><a href="#option_mwcount">&#8209;&#8209;maxwordcount</a></code>,
-and <code><a href="#option_word">&#8209;&#8209;word</a></code>.
+<code><a href="#options_seeding">--seed</a></code>,
+<code><a href="#option_step">--step</a></code>,
+<code><a href="#option_mwcount">--maxwordcount</a></code>,
+and <code><a href="#option_word">--word</a></code>.
 
 <p>
 To use the capsule file, run LASTZ like this:
@@ -5395,12 +5395,12 @@ To use the capsule file, run LASTZ like this:
 No additional effort on the part of the user is required to handle sharing of
 the capsule data between separate runs.  Nearly all options are allowed;
 however the seeding options
-<code><a href="#options_seeding">&#8209;&#8209;seed</a></code>,
-<code><a href="#option_step">&#8209;&#8209;step</a></code>,
-<code><a href="#option_mwcount">&#8209;&#8209;maxwordcount</a></code>,
-and <code><a href="#option_word">&#8209;&#8209;word</a></code>
+<code><a href="#options_seeding">--seed</a></code>,
+<code><a href="#option_step">--step</a></code>,
+<code><a href="#option_mwcount">--maxwordcount</a></code>,
+and <code><a href="#option_word">--word</a></code>
 are not allowed, since these (or their byproducts) are already stored in the
-capsule file.  Further, <code><a href="#option_masking">&#8209;&#8209;masking</a></code>
+capsule file.  Further, <code><a href="#option_masking">--masking</a></code>
 is not allowed, because it would require modifying both the target sequence and
 the target seed word position table, which are contained in the capsule.
 
@@ -5411,7 +5411,7 @@ in a read-only fashion.  Multiple running instances can map
 the same file; each instance will have its own virtual addresses for the
 capsule data, but the physical memory is shared.  There is no requirement for
 more than one instance to actually use the capsule simultaneously.  Running
-a single copy of <code>lastz</code> with <code>&#8209;&#8209;targetcapsule</code> will work
+a single copy of <code>lastz</code> with <code>--targetcapsule</code> will work
 fine, and in fact there may be a small speed improvement compared to running
 the same alignment without a capsule.
 
@@ -5449,14 +5449,14 @@ the substitution scores constant) until the gap penalties converge.
 <p>
 To have LASTZ infer scoring parameters, use
 a suitably enabled build of LASTZ (see below), and specify
-the <code><a href="#option_infer">&#8209;&#8209;infer</a></code> or
-<code><a href="#option_inferonly">&#8209;&#8209;inferonly</a></code> options.  (The latter
+the <code><a href="#option_infer">--infer</a></code> or
+<code><a href="#option_inferonly">--inferonly</a></code> options.  (The latter
 will stop after inferring the parameters, without performing the final
 alignment.)  Settings for the inference process can be specified in a
 <a href="#fmt_inference">control file</a> included with these options.
 
 <p>
-The <code><a href="#option_infscores">&#8209;&#8209;infscores</a></code> option causes the
+The <code><a href="#option_infscores">--infscores</a></code> option causes the
 inferred scoring parameters to be written out to a separate file.  If no
 <code>&lt;output_file&gt;</code> is specified, it is written to the header
 of the alignment output file, as a comment.  As a last resort, if no alignment
@@ -5530,17 +5530,17 @@ if you are interested.
 
 <p>
 Though LASTZ provides several filtering options (e.g. 
-<code><a href="#option_identity">&#8209;&#8209;identity</a></code>,
-<code><a href="#option_continuity">&#8209;&#8209;continuity</a></code>,
-<code><a href="#option_coverage">&#8209;&#8209;coverage</a></code>,
-<code><a href="#option_filter_nmatch">&#8209;&#8209;filter=nmatch</a></code>,
-<code><a href="#option_filter_nmismatch">&#8209;&#8209;filter=nmismatch</a></code>,
-<code><a href="#option_filter_ngap">&#8209;&#8209;filter=ngap</a></code> and
-<code><a href="#option_filter_cgap">&#8209;&#8209;filter=cgap</a></code>),
+<code><a href="#option_identity">--identity</a></code>,
+<code><a href="#option_continuity">--continuity</a></code>,
+<code><a href="#option_coverage">--coverage</a></code>,
+<code><a href="#option_filter_nmatch">--filter=nmatch</a></code>,
+<code><a href="#option_filter_nmismatch">--filter=nmismatch</a></code>,
+<code><a href="#option_filter_ngap">--filter=ngap</a></code> and
+<code><a href="#option_filter_cgap">--filter=cgap</a></code>),
  sometimes these
 are not sufficient for the task at hand.  But in many cases it is still possible
 to perform the desired filtering by using the
-<code><a href="#option_format">&#8209;&#8209;format=general</a></code> option in conjunction
+<code><a href="#option_format">--format=general</a></code> option in conjunction
 with a simple
 <a href="http://en.wikipedia.org/wiki/AWK">awk</a>,
 <a href="http://www.perl.org">perl</a>, or
@@ -5565,7 +5565,7 @@ about possible numbering schemes.
 <p>
 
 <table class=withlines><tbody>
-<tr class=sectend><td>AXT field</td>             <td>field for <code>&#8209;&#8209;format=general</code></td></tr>
+<tr class=sectend><td>AXT field</td>             <td>field for <code>--format=general</code></td></tr>
 <tr><td>Alignment number</td>                    <td>(none)</td></tr>
 <tr><td>Chromosome (primary organism)</td>       <td><code>name1</code></td></tr>
 <tr><td>Alignment start (primary organism)</td>  <td><code>start1</code></td></tr>
@@ -5643,25 +5643,25 @@ In that command, lastz is given the whole &ldquo;critter&rdquo; as its
 target sequence, and overlapping 200bp fragments of the critter as the
 queries.
 <p>
-The <code><a href="#option_masking">&#8209;&#8209;masking=3</a></code> option enables
+The <code><a href="#option_masking">--masking=3</a></code> option enables
 dynamic masking, which will mark any reference base appearing in 3 or more
 alignments.  Since the fragments overlap by a factor of two, we expect every
 base will appear in two trivial alignments.  Any more than that would be caused
 by a duplication elsewhere.
 <p>
-The <code><a href="#option_progressmasking">&#8209;&#8209;progress+masking</a></code>
+The <code><a href="#option_progressmasking">--progress+masking</a></code>
 option causes lastz to give you a progress report after every 10 thousand
 fragments.  These reports come to the console (stderr) and look like this:
 <pre>
 	(16.933s) processing query 50,001: critter_21299501, masked 8,920,893/51,304,566 (17.4%)
 </pre>
 <p>
-The <code><a href="#option_format">&#8209;&#8209;format=none</a></code> option inhibits the
+The <code><a href="#option_format">--format=none</a></code> option inhibits the
 normal alignment output and 
-<code><a href="#option_outputmaskingplussoft">&#8209;&#8209;format=outputmasking+:soft</a></code>
+<code><a href="#option_outputmaskingplussoft">--format=outputmasking+:soft</a></code>
 tells lastz to write the final masked intervals to a file.
 <p>
-The final line (<code><a href="#option_notransition">&#8209;&#8209;notransition</a></code>
+The final line (<code><a href="#option_notransition">--notransition</a></code>
 in this example) is whatever alignment scoring parameters you want to use. 
 What is appropriate will depend on the level of divergence you want to allow in
 the masked duplications.
@@ -5715,7 +5715,7 @@ short reads, and desire to align as much of the read as possible.
 The handling of bounding alignments in the DP matrix is different in LASTZ than
 in BLASTZ.  This is discussed in
 <a href="#diff_dp_bounds">Bounding Alignments in the DP Matrix</a>.  The
-<code><a href="#option_allbounds">&#8209;&#8209;allgappedbounds</a></code> option can be
+<code><a href="#option_allbounds">--allgappedbounds</a></code> option can be
 used to revert to the bounding criteria used in BLASTZ.
 
 <p>
@@ -5726,7 +5726,7 @@ allowed IUPAC-IUB ambiguity codes (<code>B, D, H, K, M, R, S, V, W,</code> and
 <code>Y</code>) in fasta sequences but was unclear about how these were scored. 
 Since we feel the user should be aware of how these bases are treated, LASTZ
 rejects them by default. The
-<code><a href="#option_iupac">&#8209;&#8209;ambiguous=iupac</a></code> option permits them
+<code><a href="#option_iupac">--ambiguous=iupac</a></code> option permits them
 but treats them the same as an ambiguous <code>N</code>.  This is discussed in
 <a href="#adv_non-acgt">Non-ACGT Characters</a>.
 
@@ -5767,7 +5767,7 @@ same tail, and the higher-scoring of the two has a lower-scoring anchor.
 The correction for this is to only use alignments as bounds if they satisfy the
 score threshold.  This corrected behavior is now the default in LASTZ (as of
 release 1.02.00).  The
-<code><a href="#option_allbounds">&#8209;&#8209;allgappedbounds</a></code> option can be
+<code><a href="#option_allbounds">--allgappedbounds</a></code> option can be
 used to revert to the bounding criteria used in BLASTZ.
 
 <!---->
@@ -5794,7 +5794,7 @@ Initial release.
 <tr class=newsect>
 <td>1.0.5</td><td>Aug/2/2008</td><td>
 Fixed a bug that in some cases caused a bus error when interpolated
-alignments (e.g. <code>&#8209;&#8209;inner=</code>&hellip;) were used with multiple
+alignments (e.g. <code>--inner=</code>&hellip;) were used with multiple
 queries.
 </td></tr>
 
@@ -5807,54 +5807,54 @@ file masking actions.
 
 <tr class=newsect>
 <td>1.0.21</td><td>Sep/9/2008</td><td>
-Fixed a bug involving the default value for <code>&#8209;&#8209;gappedthresh</code>
-(a.k.a. <code>L</code>) when <code>&#8209;&#8209;exact</code> is used.  The bug caused the
+Fixed a bug involving the default value for <code>--gappedthresh</code>
+(a.k.a. <code>L</code>) when <code>--exact</code> is used.  The bug caused the
 gapped threshold to be inordinately low, allowing undesirable alignment blocks
 to make it to the output file.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Fixed a bug whereby Xs and Ns were treated as desirable substitutions when
-unit scores (e.g. <code>&#8209;&#8209;match=</code>&hellip;) were used.
+unit scores (e.g. <code>--match=</code>&hellip;) were used.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Re-implemented <code>&#8209;&#8209;twins=</code>&hellip;.  The previous implementation
+Re-implemented <code>--twins=</code>&hellip;.  The previous implementation
 improperly truncated the left-extension of HSPs.  The new implementation is
 slower and uses more memory.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;census=&lt;file&gt;</code>.  The census counts the number of
+Added <code>--census=&lt;file&gt;</code>.  The census counts the number of
 times each base in the target sequence is part of an alignment block.
-Previously, <code>&#8209;&#8209;census</code> produced a census only if the output format
+Previously, <code>--census</code> produced a census only if the output format
 was LAV (the census is a special stanza in a LAV file).  Otherwise the option
 was ignored.  Now, if a file is specified a census is written to that file.
 The format of lines in the census is
 <code>&lt;name&gt; &lt;position&gt; &lt;count&gt;</code>.
 The position is one-based, and the count is limited to 255.
 <p class=small>
-In situtations where 255 is too limiting, <code>&#8209;&#8209;census16=&lt;file&gt;</code>
-or <code>&#8209;&#8209;census32=&lt;file&gt;</code> can be used, with limits of about
+In situtations where 255 is too limiting, <code>--census16=&lt;file&gt;</code>
+or <code>--census32=&lt;file&gt;</code> can be used, with limits of about
 65 thousand and 4 billion, respectively.  Note that these will respectively
 double and quadruple the amount of memory used for the census.  The default
 census uses one byte per target sequence location.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=&lt;differences&gt;</code>, to support Galaxy.  All
+Added <code>--format=&lt;differences&gt;</code>, to support Galaxy.  All
 differences (gaps and runs of mismatches) are reported, one per line.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;anchors=&lt;file&gt;</code> (eventually this was renamed to
-<code>&#8209;&#8209;segments=&lt;file&gt;</code>), giving the user the ability to bypass
+Added <code>--anchors=&lt;file&gt;</code> (eventually this was renamed to
+<code>--segments=&lt;file&gt;</code>), giving the user the ability to bypass
 the seeding and gap-free extension stages.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Changed default gap penalties for unit scores (e.g.
-<code>&#8209;&#8209;match=</code>&hellip;) to be relative to mismatch score (instead of
+<code>--match=</code>&hellip;) to be relative to mismatch score (instead of
 match score).
 </td></tr>
 
@@ -5884,7 +5884,7 @@ shortest.  Previously it was always relative to the query.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Changed defaults for xdrop and ydrop when <code>&#8209;&#8209;match</code> scoring is
+Changed defaults for xdrop and ydrop when <code>--match</code> scoring is
 used.
 </td></tr>
 
@@ -5899,15 +5899,15 @@ Added <code>general</code> output format.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;maxwordcount</code>.
+Added <code>--maxwordcount</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;notrivial</code>.
+Added <code>--notrivial</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Corrected problem with <code>&#8209;&#8209;subset</code> action, which wasn't using
+Corrected problem with <code>--subset</code> action, which wasn't using
 mangled sequence names.
 </td></tr>
 
@@ -5934,7 +5934,7 @@ Changed reporting of duplicated options from
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=rdotplot</code> option.
+Added <code>--format=rdotplot</code> option.
 </td></tr>
 
 <!-- 1.1.25 -->
@@ -5952,7 +5952,7 @@ Added support for target capsule files.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added support for <code>&#8209;&#8209;format=cigar</code>.
+Added support for <code>--format=cigar</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -5961,8 +5961,8 @@ specifier.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Corrected the behavior of <code>&#8209;&#8209;exact</code> regarding lowercase and
-non-ACGT characters.  <code>&#8209;&#8209;exact</code> now considers, e.g., a lowercase A
+Corrected the behavior of <code>--exact</code> regarding lowercase and
+non-ACGT characters.  <code>--exact</code> now considers, e.g., a lowercase A
 to be a match for an uppercase A.  Further, any non-ACGT characters now stop
 the match.
 </td></tr>
@@ -5984,13 +5984,13 @@ program continues.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added the <code>&#8209;&#8209;output</code> option.  In some batch systems, it is
+Added the <code>--output</code> option.  In some batch systems, it is
 difficult to redirect <code>stdout</code> into a file, so this option allows
 the user to do it directly.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Removed <code>&#8209;&#8209;quantum</code> and <code>&#8209;&#8209;code</code> options, replacing
+Removed <code>--quantum</code> and <code>--code</code> options, replacing
 them with the <code>quantum</code> and <code>quantum=&lt;code_file&gt;</code>
 sequence specifier actions.  This is in preparation for allowing a quantum
 target sequence.
@@ -6005,12 +6005,12 @@ query used the <code>multiple</code> sequence specifier action, exact match
 extension was able to skip the boundary between sequences (this problem was
 introduced in 1.1.25).  Second, when the exact match should have extended to
 the end of the sequence, it was being cut short by 1 bp (on either end).  The
-latter problem was only evident for <code>&#8209;&#8209;nogapped</code>;  a gapped entension
+latter problem was only evident for <code>--nogapped</code>;  a gapped entension
 recovered the additional bases.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed several problems with <code>&#8209;&#8209;segment=&lt;file&gt;</code>.  First, if
+Fixed several problems with <code>--segment=&lt;file&gt;</code>.  First, if
 the file contained more than 4,000 segments, on some platforms the program would
 segfault.  Second, if a sequence subrange was being used, the limit test
 comparing the segment interval to the subrange was incorrect.  Third (if the
@@ -6019,28 +6019,28 @@ negative strand it was improperly mapped to the subrange.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;noytrim</code> to prevent y-drop mismatch shadow, improving
+Added <code>--noytrim</code> to prevent y-drop mismatch shadow, improving
 LASTZ&rsquo;s ability to align short reads.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Set the default gapped extension score threshold to inherit the lowest HSP score in the
-case where <code>&#8209;&#8209;hspthresh=top&lt;basecount&gt;</code> or
-<code>&#8209;&#8209;hspthresh=top&lt;percentage&gt;%</code> is used but
-<code>&#8209;&#8209;gappedthresh=&lt;score&gt;</code> is not (and gapped extension is
+case where <code>--hspthresh=top&lt;basecount&gt;</code> or
+<code>--hspthresh=top&lt;percentage&gt;%</code> is used but
+<code>--gappedthresh=&lt;score&gt;</code> is not (and gapped extension is
 performed).  Previously this case was trapped by a low level routine and the
 alignment was halted.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Fixed a problem with the <code>start2+</code> field of
-<code>&#8209;&#8209;format=general</code>.  The position was left blank for alignments on
+<code>--format=general</code>.  The position was left blank for alignments on
 the + strand.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed a problem in which <code>&#8209;&#8209;writecapsule</code> was rejected if
-<code>&#8209;&#8209;seed=match&lt;length&gt;</code> was used.
+Fixed a problem in which <code>--writecapsule</code> was rejected if
+<code>--seed=match&lt;length&gt;</code> was used.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6061,7 +6061,7 @@ truncated.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Changed how <code>&#8209;&#8209;format=cigar</code> reports alignments on the negative
+Changed how <code>--format=cigar</code> reports alignments on the negative
 strand.  Apparently there is no complete spec for CIGAR format.  Matching what
 I see output by exonerate for certain cases is the best I can do.
 </td></tr>
@@ -6073,28 +6073,28 @@ alignment.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>cigar</code> field for <code>&#8209;&#8209;format=general</code>.
+Added <code>cigar</code> field for <code>--format=general</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>shingle</code> field for <code>&#8209;&#8209;format=general</code>.
+Added <code>shingle</code> field for <code>--format=general</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added the <code>&#8209;&#8209;rdotplot=&lt;file&gt;</code> option.
+Added the <code>--rdotplot=&lt;file&gt;</code> option.
 </td></tr>
 
 <tr><td></td><td></td><td>
-The <code>&#8209;&#8209;notrivial</code> option now works with the <code>multiple</code>
+The <code>--notrivial</code> option now works with the <code>multiple</code>
 sequence specifier action.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;markend</code>.
+Added <code>--markend</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;nameparse=darkspace</code>.
+Added <code>--nameparse=darkspace</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6112,13 +6112,13 @@ gapped alignments ever being found.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed a problem with the combination of &#8209;&#8209;recoverseeds and &#8209;&#8209;exact.
+Fixed a problem with the combination of --recoverseeds and --exact.
 Recovered seeds were cut short by one base on the left end.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=segments</code> option.  This was later replaced by
-<code>&#8209;&#8209;writesegments</code>.
+Added <code>--format=segments</code> option.  This was later replaced by
+<code>--writesegments</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6138,21 +6138,21 @@ The workaround uses an ifdef that specifically targets gcc 4.3.2.
 <td>
 1.02.00</td><td>Jan/12/2010</td><td>
 Relaxed the rejection of some output formats, which was too aggressive.
-Specifically, runs with <code>&#8209;&#8209;tableonly</code> were rejected because of
+Specifically, runs with <code>--tableonly</code> were rejected because of
 output format, even though no output would be generated in that format.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added the ability to set the <code>&#8209;&#8209;maxwordcount</code> option as a
-percentage.  Also, <code>&#8209;&#8209;maxwordcount=&lt;limit&gt;</code> now allows
+Added the ability to set the <code>--maxwordcount</code> option as a
+percentage.  Also, <code>--maxwordcount=&lt;limit&gt;</code> now allows
 <code>&lt;limit&gt;</code> to be 1.  Previously it was not allowed to be less
 than 2.
 </td></tr>
 
 <tr><td></td><td></td><td>
 The scoring matrix used during x-drop extension now reflects the use
-of <code>&#8209;&#8209;ambiguous=n</code>.  Previously, this matrix was not affected by
-<code>&#8209;&#8209;ambiguous=n</code>,
+of <code>--ambiguous=n</code>.  Previously, this matrix was not affected by
+<code>--ambiguous=n</code>,
 and N-vs-N matches and  N-vs-other matches were scored as -100 (more
 specifically, as <code>fill_score</code>) during gap-free extension. This
 caused LASTZ to miss some HSPs, usually those containing an N-vs-N match, since
@@ -6167,28 +6167,28 @@ a factor of about 12.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;softmask=&lt;mask_file&gt;</code> file action to permit
+Added <code>--softmask=&lt;mask_file&gt;</code> file action to permit
 soft masking of specified intervals.  Also added masking of the
 interval complements &mdash;
-<code>&#8209;&#8209;xmask=keep:&lt;mask_file&gt;</code>,
-<code>&#8209;&#8209;nmask=keep:&lt;mask_file&gt;</code>, and
-<code>&#8209;&#8209;softmask=keep:&lt;mask_file&gt;</code>.  These make it easier to
+<code>--xmask=keep:&lt;mask_file&gt;</code>,
+<code>--nmask=keep:&lt;mask_file&gt;</code>, and
+<code>--softmask=keep:&lt;mask_file&gt;</code>.  These make it easier to
 restrict alignment to several specified intervals of a sequence.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Enabled the use of <code>&#8209;&#8209;filter=[&lt;transv&gt;,]&lt;matches&gt;</code>
-for non-halfweight seeds.  Previously, <code>&#8209;&#8209;filter</code> had only been
+Enabled the use of <code>--filter=[&lt;transv&gt;,]&lt;matches&gt;</code>
+for non-halfweight seeds.  Previously, <code>--filter</code> had only been
 tested for half-weight seeds, but was erroneously prohibited for
 all seeds (instead of just prohibiting non-halfweight seeds).  Further, it
-was not properly implemented for seed-only output (<code>&#8209;&#8209;nogfextend
-&#8209;&#8209;nogapped</code>).  These have all been corrected, and <code>&#8209;&#8209;filter</code>
+was not properly implemented for seed-only output (<code>--nogfextend
+--nogapped</code>).  These have all been corrected, and <code>--filter</code>
 is now available for all seed types.
 <p class=small>
-Also corrected the behavior of <code>&#8209;&#8209;filter</code> regarding lowercase and
-non-ACGT characters.  <code>&#8209;&#8209;filter</code> now considers, e.g., a lowercase
+Also corrected the behavior of <code>--filter</code> regarding lowercase and
+non-ACGT characters.  <code>--filter</code> now considers, e.g., a lowercase
 <code>a</code> to be a match for an uppercase <code>A</code>.  Further, for the
-purposes of <code>&#8209;&#8209;filter</code>, any non-ACGT characters are considered to be
+purposes of <code>--filter</code>, any non-ACGT characters are considered to be
 transversions.
 <p class=small>
 Also changed the behavior when the <code>&lt;transv&gt;</code> field is absent.
@@ -6204,12 +6204,12 @@ appropriate behavioral adjustments for running on a Windows machine.
 Currently this only affects the handling of file paths.  To activate it,
 the user must add <code>-DcompileForWindows</code> to the definition of
 <code>definedForAll</code> in
-<code>.../lastz&#8209;distrib&#8209;X.XX.XX/src/Makefile</code>.
+<code>.../lastz-distrib-X.XX.XX/src/Makefile</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed chaining of seed hits.  Previously, if <code>&#8209;&#8209;nogfextend</code> and
-<code>&#8209;&#8209;chain</code> were used together, nothing was output.  This was due to
+Fixed chaining of seed hits.  Previously, if <code>--nogfextend</code> and
+<code>--chain</code> were used together, nothing was output.  This was due to
 the fact that unextended seeds had no scores, and the chaining algorithm only
 reports chains with positive score.  This has been corrected by calculating
 scores (as the sum of substitution scores) over anchor segments whenever (a)
@@ -6217,18 +6217,18 @@ the segments have not had scores computed for them, and (b) scores are required
 for later processing.
 <p class=small>
 This change may also affect (for the better) the results of gapped extension
-when either <code>&#8209;&#8209;nogfextend</code> or <code>&#8209;&#8209;exact</code> is used.  Gapped
+when either <code>--nogfextend</code> or <code>--exact</code> is used.  Gapped
 extension processes the anchors highest score first.  Since
-<code>&#8209;&#8209;nogfextend</code> left all scores zero, the actual order in which gapped
+<code>--nogfextend</code> left all scores zero, the actual order in which gapped
 extension was performed in that case was dependent on how the sort routine (the
-C runtime routine qsort) deals with ties.  For <code>&#8209;&#8209;exact</code>, the score
+C runtime routine qsort) deals with ties.  For <code>--exact</code>, the score
 was the length of the match.  This has been changed to the segment&rsquo;s
 substitution score.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Changed <code>&#8209;&#8209;format=segments</code> to
-<code>&#8209;&#8209;writesegments=&lt;file&gt;</code>.
+Changed <code>--format=segments</code> to
+<code>--writesegments=&lt;file&gt;</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6267,11 +6267,11 @@ Added the <code>subsample</code> action.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added the <code>&#8209;&#8209;anyornone</code> option.
+Added the <code>--anyornone</code> option.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;allgappedbounds</code>.
+Added <code>--allgappedbounds</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6298,25 +6298,25 @@ values were inconsistent and off by one.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code><a href="#option_progress">&#8209;&#8209;progress=[&lt;N&gt;]</a></code>.
+Added <code><a href="#option_progress">--progress=[&lt;N&gt;]</a></code>.
 This existed as an unadvertized option in earlier versions of the program, as
-<code>&#8209;&#8209;debug=queryprogress=&lt;N&gt;</code>.  It has now been promoted to a
+<code>--debug=queryprogress=&lt;N&gt;</code>.  It has now been promoted to a
 first class option.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;ambiguous=iupac</code> and changed <code>&#8209;&#8209;ambiguousn</code> to
-<code>&#8209;&#8209;ambiguous=n</code>.  the former is still supported, but not advertized.
+Added <code>--ambiguous=iupac</code> and changed <code>--ambiguousn</code> to
+<code>--ambiguous=n</code>.  the former is still supported, but not advertized.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Column headers for <code>&#8209;&#8209;format=general</code> now match the command-line
+Column headers for <code>--format=general</code> now match the command-line
 keywords.  Previously, all related keywords shared the same column header.
 For example, keywords <code>start2</code>, <code>zstart2</code>,
 <code>start2+</code> and <code>zstart2+</code> all produced the same column
 header, <code>start2</code>, in the output file.
 <p class=small>
-Also added <code>&#8209;&#8209;format=general-</code>.
+Also added <code>--format=general-</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6329,12 +6329,12 @@ compile-time definition <code>override_inttypes</code> can be used.
 <tr><td></td><td></td><td>
 Added <code>nmatch</code>, <code>nmismatch</code>, <code>ngap</code>,
 <code>cgap</code> and <code>cigarx</code> fields for
-<code>&#8209;&#8209;format=general</code>.
+<code>--format=general</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=mapping</code>, a shortcut for typical fields for
-<code>&#8209;&#8209;format=general</code> for mapping reads.
+Added <code>--format=mapping</code>, a shortcut for typical fields for
+<code>--format=general</code> for mapping reads.
 </td></tr>
 
 <!-- 1.02.11 -->
@@ -6342,19 +6342,19 @@ Added <code>&#8209;&#8209;format=mapping</code>, a shortcut for typical fields f
 <tr class=newsect>
 <td>
 1.02.11</td><td>Aug/21/2010</td><td>
-Fixed the <code>cigarx</code> field for <code>&#8209;&#8209;format=general</code>, so
+Fixed the <code>cigarx</code> field for <code>--format=general</code>, so
 that a run length of 1 is omitted for indels.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed the behavior of <code>&#8209;&#8209;recoverseeds</code>, which was failing to
+Fixed the behavior of <code>--recoverseeds</code>, which was failing to
 recover many HSPs when seed denisty was high.  This was due to left extension
 being blocked by other seeds on that same hash-equivalent diagonal.  Left
-extension is now unblocked when <code>&#8209;&#8209;recoverseeds</code> is enabled.
+extension is now unblocked when <code>--recoverseeds</code> is enabled.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Changed/corrected how the <code>&#8209;&#8209;segment</code> option handles wildcard names
+Changed/corrected how the <code>--segment</code> option handles wildcard names
 when the <code>multiple</code> action in used.  To support this, the
 <code>rewind</code> command was added to the segments file format.
 </td></tr>
@@ -6381,7 +6381,7 @@ accurately describes the problem.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed the implementation of <code>&#8209;&#8209;self</code> with regard to mirror-image
+Fixed the implementation of <code>--self</code> with regard to mirror-image
 pairs.  Previously, alignments were internally restricted to be above the main
 diagonal in the ungapped stage only.  The mirrored twins were created prior to
 the gapped stage, and the gapped stage operated on the full set of anchors.
@@ -6397,7 +6397,7 @@ created just prior to output.
 <tr class=newsect>
 <td>
 1.02.16</td><td>Nov/2/2010</td><td>
-Fixed a problem with <code>&#8209;&#8209;self</code>, introduced in 1.02.11.  The problem
+Fixed a problem with <code>--self</code>, introduced in 1.02.11.  The problem
 manifested itself on 64-bit CPUs, with an error message indicating it was
 attempting to allocate 17 billion bytes for edit_script_copy.  This has been
 corrected.
@@ -6420,14 +6420,14 @@ character (comma, ampersand, etc.).
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=blastn</code>.
+Added <code>--format=blastn</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Added <code>idfrac</code>, <code>id%</code>, <code>blastid%</code>,
 <code>covfrac</code>, <code>cov%</code>, <code>confrac</code>,
 <code>con%</code>, <code>ncolumn</code>, and <code>npair</code> fields for
-<code>&#8209;&#8209;format=general</code>.
+<code>--format=general</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6447,25 +6447,25 @@ highly likely to cause truncated alignments.  It&rsquo;s not clear that there
 is any useful reason to set gap extension to zero.
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=rdotplot+score</code> and
-<code>&#8209;&#8209;rdotplot+score=&lt;file&gt;</code>.
+Added <code>--format=rdotplot+score</code> and
+<code>--rdotplot+score=&lt;file&gt;</code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Improved <code>&#8209;&#8209;masking=&lt;count&gt;</code> so that it can allow a count
+Improved <code>--masking=&lt;count&gt;</code> so that it can allow a count
 threshold greater than 254.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed a problem with <code>&#8209;&#8209;scores=&lt;scoring_file&gt;</code>.  When the
+Fixed a problem with <code>--scores=&lt;scoring_file&gt;</code>.  When the
 <code>&lt;scoring_file&gt;</code> defined score values for <code>N</code>,
 those scores were not honored during the ungapped seed extension stage.
 </td></tr>
 
 <tr><td></td><td></td><td>
 <a name="hist_ambiguous_subs"></a>
-Fixed problems with <code><a href="#option_ambign">&#8209;&#8209;ambiguous=n</a></code> and
-<code><a href="#option_iupac">&#8209;&#8209;ambiguous=iupac</a></code>. These were
+Fixed problems with <code><a href="#option_ambign">--ambiguous=n</a></code> and
+<code><a href="#option_iupac">--ambiguous=iupac</a></code>. These were
 incorrectly penalizing substitutions between non-ambiguous nucleotides
 (<code>A, C, G, or T</code>) and ambiguous ones (<code>N, B, D, H, K, M, R, S,
 V, W,</code> or <code>Y</code>).  This has been corrected to honor the original
@@ -6477,7 +6477,7 @@ penalty of twice the gap extension should be used.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code><a href="#option_queryhsplimit">&#8209;&#8209;queryhsplimit=&lt;n&gt;</a></code>.
+Added <code><a href="#option_queryhsplimit">--queryhsplimit=&lt;n&gt;</a></code>.
 </td></tr>
 
 <!-- 1.02.27 -->
@@ -6485,7 +6485,7 @@ Added <code><a href="#option_queryhsplimit">&#8209;&#8209;queryhsplimit=&lt;n&gt
 <tr class=newsect>
 <td>
 1.02.27</td><td>Jan/31/2011</td><td>
-Added <code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file&gt;</a></code>.
+Added <code><a href="#option_outputmasking">--outputmasking=&lt;file&gt;</a></code>.
 </td></tr>
 
 <!-- 1.02.37 -->
@@ -6493,7 +6493,7 @@ Added <code><a href="#option_outputmasking">&#8209;&#8209;outputmasking=&lt;file
 <tr class=newsect>
 <td>
 1.02.37</td><td>Mar/31/2011</td><td>
-Added <code><a href="#option_outputmaskingsoft">&#8209;&#8209;outputmasking:soft=&lt;file&gt;</a></code>.
+Added <code><a href="#option_outputmaskingsoft">--outputmasking:soft=&lt;file&gt;</a></code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
@@ -6511,7 +6511,7 @@ comment unless it is is preceded by whitespace or the start of the line.
 
 <tr><td></td><td></td><td>
 Changed the behavior of
-<code><a href="#option_queryhsplimit">&#8209;&#8209;queryhsplimit=&lt;n&gt;</a></code> to
+<code><a href="#option_queryhsplimit">--queryhsplimit=&lt;n&gt;</a></code> to
 better match user expectations.  Previously the limit was applied separately
 for each strand of the query.  Moreover, HSPs discovered before the limit was
 reached were still passed downstream for further processing.
@@ -6523,20 +6523,20 @@ are discarded and no downstream processing is performed.
 
 <tr><td></td><td></td><td>
 Fixed a bug involving the <code>ngap</code> and <code>cgap</code> fields for
-<code>&#8209;&#8209;format=general</code>.  These fields were only reported correctly if
+<code>--format=general</code>.  These fields were only reported correctly if
 the <code>continuity</code> or <code>ncolumn</code> fields were also requested.
 Otherwise, the value reported represented the contents of unitialized memory.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Added filtering options
-<code><a href="#option_filter_nmismatch">&#8209;&#8209;filter=nmismatch:0..&lt;max&gt;</a></code>,
-<code><a href="#option_filter_ngap">&#8209;&#8209;filter=ngap:0..&lt;max&gt;</a></code>,
-and <code><a href="#option_filter_cgap">&#8209;&#8209;filter=cgap:0..&lt;max&gt;</a></code>.
+<code><a href="#option_filter_nmismatch">--filter=nmismatch:0..&lt;max&gt;</a></code>,
+<code><a href="#option_filter_ngap">--filter=ngap:0..&lt;max&gt;</a></code>,
+and <code><a href="#option_filter_cgap">--filter=cgap:0..&lt;max&gt;</a></code>.
 <p class=small>
 Also changed the option name for match count filtering to
-<code><a href="#option_filter_nmatch">&#8209;&#8209;filter=nmatch:&lt;min&gt;</a></code>.
-The older option, <code>&#8209;&#8209;matchcount=&lt;min&gt;</a></code> is of course still
+<code><a href="#option_filter_nmatch">--filter=nmatch:&lt;min&gt;</a></code>.
+The older option, <code>--matchcount=&lt;min&gt;</a></code> is of course still
 recognized.
 </td></tr>
 
@@ -6545,15 +6545,15 @@ recognized.
 <tr class=newsect>
 <td>
 1.02.40</td><td>Apr/7/2011</td><td>
-Added <code><a href="#option_outputmaskingplus">&#8209;&#8209;outputmasking+=&lt;file&gt;</a></code>
-and <code><a href="#option_outputmaskingplussoft">&#8209;&#8209;outputmasking+:soft=&lt;file&gt;</a></code>.
+Added <code><a href="#option_outputmaskingplus">--outputmasking+=&lt;file&gt;</a></code>
+and <code><a href="#option_outputmaskingplussoft">--outputmasking+:soft=&lt;file&gt;</a></code>.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Added
-<code><a href="#option_progressmasking">&#8209;&#8209;progress+masking=[&lt;N&gt;]</a></code>.
+<code><a href="#option_progressmasking">--progress+masking=[&lt;N&gt;]</a></code>.
 This existed as an unadvertized option in earlier versions of the program, as
-<code>&#8209;&#8209;debug=queryprogress+masking=&lt;N&gt;</code>.  It has now been promoted
+<code>--debug=queryprogress+masking=&lt;N&gt;</code>.  It has now been promoted
 to a first class option.
 </td></tr>
 
@@ -6571,7 +6571,7 @@ When a <a href="#action_subrange">subrange</a> was used, the wrong denominator
 was used to compute <a href="#define_coverage">coverage</a>.  The denominator
 used was the length of the subrange instead of the entire sequence.  This
 adversely affected both the
-<code><a href="#option_coverage">&#8209;&#8209;coverage</a></code> filter and the
+<code><a href="#option_coverage">--coverage</a></code> filter and the
 <a href="#fmt_gen_coverage">coverage</a> output field.  This has been corrected
 to use the length of the entire sequence.
 </td></tr>
@@ -6590,7 +6590,7 @@ appropriate.
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code>&#8209;&#8209;format=general</code> fields
+Added <code>--format=general</code> fields
 <code><a href="#fmt_gen_nucs1">nucs1</a></code>,
 <code><a href="#fmt_gen_nucs2">nucs2</a></code>
 (the entire target or query nucleotides sequence),
@@ -6600,7 +6600,7 @@ Added <code>&#8209;&#8209;format=general</code> fields
 </td></tr>
 
 <tr><td></td><td></td><td>
-Fixed a minor problem with the <code>&#8209;&#8209;format=general</code> fields
+Fixed a minor problem with the <code>--format=general</code> fields
 <code>cov%</code> and <code>con%</code>.  Those fields were being written with
 an extra tab character preceeding them.  This had a detrimental affect on
 downstream parsers that required tabs as separators (parsers that interpreted
@@ -6608,26 +6608,26 @@ whitespace as separators were not affected).
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code><a href="#option_readgroup">&#8209;&#8209;readgroup=&lt;tags&gt;</a></code>,
-allowing the specification of tags for SAM's <code>&#8209;RG</code> header line.
+Added <code><a href="#option_readgroup">--readgroup=&lt;tags&gt;</a></code>,
+allowing the specification of tags for SAM's <code>-RG</code> header line.
 </td></tr>
 
 <tr><td></td><td></td><td>
 Added
-<code><a href="#option_alloc_target">&#8209;&#8209;allocate:target=&lt;bytes&gt;</a></code>
+<code><a href="#option_alloc_target">--allocate:target=&lt;bytes&gt;</a></code>
 and
-<code><a href="#option_alloc_query">&#8209;&#8209;allocate:query=&lt;bytes&gt;</a></code>.
+<code><a href="#option_alloc_query">--allocate:query=&lt;bytes&gt;</a></code>.
 These allow the user to predict the amount of memory needed to store target
 or query sequence data, which in some instances can resolve memory overuse
 (it saves LASTZ from incrementally predicting the amount of memory needed).
 <p small>
 For consistency,
-<code><a href="#option_alloc_traceback">&#8209;&#8209;allocate:traceback=&lt;bytes&gt;</a></code>
-is now renamed (from <code>&#8209;&#8209;traceback=&lt;bytes&gt;</a></code>).
+<code><a href="#option_alloc_traceback">--allocate:traceback=&lt;bytes&gt;</a></code>
+is now renamed (from <code>--traceback=&lt;bytes&gt;</a></code>).
 </td></tr>
 
 <tr><td></td><td></td><td>
-Added <code><a href="#option_include">&#8209;&#8209;include=&lt;file&gt;</a></code>,
+Added <code><a href="#option_include">--include=&lt;file&gt;</a></code>,
 allowing command-line arguemnts to be read from a text file.
 
 <tr><td></td><td></td><td>
@@ -6646,8 +6646,8 @@ details.
 <tr class=newsect>
 <td>
 <span class=updatethis><a name="history_recent"></a>1.03.02</td><td>Jul/19/2011</td><td>
-Fixed a bug in <code><a href="#option_format">&#8209;&#8209;format=axt</a></code> and
-<code><a href="#option_format">&#8209;&#8209;format=axt+</a></code>, which caused every
+Fixed a bug in <code><a href="#option_format">--format=axt</a></code> and
+<code><a href="#option_format">--format=axt+</a></code>, which caused every
 alignment to be reported twice.  The bug had been introduced in version
 1.02.28 (not present in 1.02.27, present in 1.02.37).
 </td></tr>
